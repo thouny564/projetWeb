@@ -1,0 +1,143 @@
+#containerImage {
+    width: 70vw;
+    height: 540px;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+
+}
+
+/* Conteneur des images */
+.carousel-images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+}
+
+/* Images superposées */
+.carousel-images img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    inset: 0;
+
+}
+
+/* Image visible */
+.carousel-images img.active {
+    opacity: 1;
+}
+
+/* Boutons */
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 20;
+    background: none;
+}
+
+.prev-btn {
+    left: 5px;
+}
+
+.next-btn {
+    right: 5px;
+}
+
+#buttonProducts {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #0e1216;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-left: 220px;
+    margin-bottom: 60px;
+}
+
+
+#titleCarousel {
+     border-top: 4px solid;
+}
+
+footer {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+
+
+}
+
+.footer-links{
+    display: flex;
+    flex-direction: column; /* affichage en colonne */
+    gap: 10px;
+}
+
+
+.footer-content p {
+    margin-top: 25px;
+}
+
+.footer-links a {
+text-decoration: none;
+font-weight: 500;
+cursor: pointer;
+color: white;
+display: block;
+
+}
+
+.footer-links a:hover{
+    color: mediumpurple;
+}
+
+
+#MyAccount {
+  color: white;
+  border-radius: 10px;
+  background-color: #e63946;
+  border: none;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  appearance: none; /* Enlève la flèche par défaut du navigateur */
+  -webkit-appearance: none;
+  padding: 5px 5px;
+  width: 100px;
+
+
+}
+
+#shopDescription {
+text-decoration: none;
+font-weight: 500;
+cursor: pointer;
+color: white;
+
+}
+
+#shopDescription:hover{
+    color: mediumpurple;
+}
