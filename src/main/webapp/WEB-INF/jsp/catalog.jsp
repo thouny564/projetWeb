@@ -1,36 +1,62 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div class="container">
 
     <div id ="search_filters">
-        <p style="margin-left: 10px; ">Filtrer par</p>
+        <p style="margin-left: 10px; "><spring:message code="filterTextContainer"/></p>
         <section>
-            <p style="margin-left: 25px; ">Categories</p>
+            <p style="margin-left: 25px; "><spring:message code="categories"/><span style="font-size: 10px"><sup>*<spring:message code="warningMessageFilter"/></sup></span></p>
             <ul id="checkboxChoices" style="list-style: none;">
                 <c:forEach var="category" items="${categories}">
                     <li style="margin-bottom: 8px">
-                        <input type="checkbox" id="${category.id}" value="${category.id}">
-                        <label for="${category.id}">${category.nameFr}</label>
+                        <input class="single-select" type="checkbox" id="${category.id}" value="${category.id}">
+                        <c:choose>
+                            <c:when test="${lang =='fr'}">
+                                <label for="${category.id}">${category.nameFr}</label>
+                            </c:when>
+                            <c:otherwise>
+                                <label for="${category.id}">${category.nameEn}</label>
 
+                            </c:otherwise>
+                        </c:choose>
                     </li>
                 </c:forEach>
             </ul>
+
+
+            <script src="<spring:url value='/js/checkbox.js' />"></script>
+
 
         </section>
 
     </div>
     <div id="productsContainer">
         <c:forEach var="product" items="${products}">
-            <form action="${pageContext.request.contextPath}/cart/${product.id}" method="get">
-            <div  class="card" onclick="window.location.href='${pageContext.request.contextPath}/cart'">
-                    <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="${product.nameEn}" width=200 height=220>
-                    <h2>${product.nameFr}</h2>
-                    <p>Categorie: ${product.category.nameEn} (${product.category.nameFr})</p>
+            <a  style="text-decoration: none" href="${pageContext.request.contextPath}/product/${product.id}">
+            <div  class="card">
+                    <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="${product.nameEn}" width=180 height=220>
+                    <c:choose>
+                        <c:when test="${lang=='fr'}">
+
+                            <h2>${product.nameFr}</h2>
+                            <p><spring:message code="categoryText"/>: ${product.category.nameEn} (${product.category.nameFr})</p>
+
+                        </c:when>
+
+                        <c:otherwise>
+                            <h2>${product.nameEn}</h2>
+                            <p><spring:message code="categoryText"/>: ${product.category.nameEn} (${product.category.nameEn})</p>
+
+                        </c:otherwise>
+
+
+                    </c:choose>
                     <p>${product.price} €</p>
-                    <button>Ajouter au panier</button>
+                    <button><spring:message code="addCartButton"/></button>
             </div>
-            </form>
+            </a>
         </c:forEach>
     </div>
 </div>

@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <h1>Mon Panier</h1>
 
 <!-- Message de confirmation commande -->
@@ -13,11 +14,11 @@
 <table id="cart-table" class="cart-table">
     <thead>
         <tr>
-            <th>Image</th>
-            <th>Produit</th>
-            <th>Prix</th>
-            <th>Stock</th>
-            <th>Quantité</th>
+            <th><spring:message code="picture"/></th>
+            <th><spring:message code="product"/></th>
+            <th><spring:message code="price"/></th>
+            <th><spring:message code="stock"/></th>
+            <th><spring:message code="quantity"/></th>
             <th>Actions</th>
             <th>Total</th>
         </tr>

@@ -10,7 +10,7 @@
 </head>
 <body>
 
-Welcome, admin!
+<spring:message code="welcomeAdmin"/>
 
 <div>
 

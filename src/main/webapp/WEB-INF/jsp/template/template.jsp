@@ -5,6 +5,8 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ include file="../include/importTags.jsp" %>
 
+
+
 <html>
 <head>
     <link type="text/css" href="<spring:url value='/css/header.css' />" rel="stylesheet">
@@ -16,6 +18,13 @@
     <link type="text/css" href="<spring:url value='/css/compagnyDescription.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/authenticated.css' />" rel="stylesheet">
 
+    <spring:url var="localeFr" value="">
+        <spring:param name="locale" value="fr"/>
+    </spring:url>
+
+    <spring:url var="localeEn" value="">
+        <spring:param name="locale" value="en"/>
+    </spring:url>
 
 
 </head>
@@ -25,47 +34,48 @@
 
       <nav id="sidebar">
                 <div>
-                    <a href="${pageContext.request.contextPath}/welcome" title="accueil">
-                        <img src="${pageContext.request.contextPath}/images/jeux.png" alt="Accueil" width="40" height="40" style="margin-left: 20px;">
+                    <a href="${pageContext.request.contextPath}/welcome">
+                        <img src="${pageContext.request.contextPath}/images/jeux.png" alt="<spring:message code='home'/>" width="40" height="40" style="margin-left: 20px;">
                     </a>
                 </div>
                 <div id="optionSite">
-                        <a id="shopDescription" href="${pageContext.request.contextPath}/compagnyDescription" title="magasin" style="margin-right: 20px; ">Notre magasin</a>
+                        <a id="shopDescription" href="${pageContext.request.contextPath}/compagnyDescription" title="<spring:message code='shop'/>"  style="margin-right: 20px; "><spring:message code="shop"/></a>
 
                         <div class="dropdown">
-                                <button class="dropbtn">FR<span class="arrow">∨</span></button>
+                                <button class="dropbtn"><spring:message code="languageTitle"/><span class="arrow">∨</span></button>
                                 <ul class="dropdown-content">
                                 <li>
                                     <img src="${pageContext.request.contextPath}/images/drapeau.png" width="16px" height="16px">
-                                    <a href="#">Français</a>
+                                    <a href="${localeFr}"><spring:message code="frenchChoose"/></a>
                                 </li>
 
                                 <li>
                                     <img src="${pageContext.request.contextPath}/images/royaume-uni.png" width="16px" height="16px">
-                                    <a href="#">Anglais</a>
+                                    <a href="${localeEn}"><spring:message code="englishChoose"/></a>
                                 </li>
                                 </ul>
 
-                            </div>
+                        </div>
+
+                     <c:if test="${not empty  pageContext.request.userPrincipal}">
+                    <form method="post" action="<c:url value='/logout' />" >
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <button id="logout-form" type="submit"><spring:message code="deconnectText"/></button>
+                    </form>
+                    </c:if>
 
 
-
-
-                <a href="${pageContext.request.contextPath}/authenticated" title="Mon compte">
-                    <img src="${pageContext.request.contextPath}/images/utilisateur.png" alt="Profil" class="nav-icon" width="30" height="30" style="filter: brightness(0) invert(1);">
+                <a href="${pageContext.request.contextPath}/authenticated" title="<spring:message code="hrefTitleAccount"/>">
+                    <img src="${pageContext.request.contextPath}/images/utilisateur.png" alt="<spring:message code="profile"/>" class="nav-icon" width="30" height="30" style="filter: brightness(0) invert(1);">
                 </a>
 
-                <a href="${pageContext.request.contextPath}/cart" title="Mon panier">
-                    <img src="${pageContext.request.contextPath}/images/ajouter-au-panier.png" alt="Panier" class="nav-icon" width="30" height="30" style="filter: brightness(0) invert(1);">
+                <a href="${pageContext.request.contextPath}/cart">
+                    <img src="${pageContext.request.contextPath}/images/ajouter-au-panier.png" alt="<spring:message code="cart"/>" class="nav-icon" width="30" height="30" style="filter: brightness(0) invert(1);">
                 </a>
 
                 </div>
 
         </nav>
-
-
-
-
 
 
     <div  class="main-content">
@@ -76,17 +86,24 @@
     <div class="footer-content">
 
     <div class="footer-links">
-      <a href="${pageContext.request.contextPath}/authenticated">Mon compte</a>
-      <button id="MyAccount"href="${pageContext.request.contextPath}/authenticated">S'inscrire</button>
-      <a href="${pageContext.request.contextPath}/compagnyDescription">Notre magasin</a>
+        <a href=${pageContext.request.contextPath}/welcome><spring:message code='home'/></a>
+        <a href="${pageContext.request.contextPath}/authenticated"><spring:message code="hrefTitleAccount"/></a>
+
+      <button id="MyAccount"href="${pageContext.request.contextPath}/authenticated"><spring:message code="inscription"/></button>
+      <a href="${pageContext.request.contextPath}/compagnyDescription"><spring:message code="shop"/></a>
+
     </div>
 
-    <p>© 2025 Tryhard — Tous droits réservés</p>
+    <p>© 2025 Tryhard — <spring:message code="rightReserved"/></p>
+
+
+
+
+
   </div>
 </footer>
 
       <script src="<spring:url value='/js/carousel.js' />"></script>
-
 
 </body>
 

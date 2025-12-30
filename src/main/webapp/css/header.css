@@ -53,10 +53,9 @@ body {
   color: #6dc7e3; /* Changement de couleur au survol (le rouge de votre bouton) */
 }
 
-.dropdown button{
+.dropdown button, #logout-form {
   color: white;
   border-radius: 5px;
-  background-color: #e63946;
   border: none;
   font-family: Arial, sans-serif;
   font-weight: bold;
@@ -66,6 +65,15 @@ body {
   appearance: none;
   -webkit-appearance: none;
   padding: 5px 5px;
+}
+
+.dropdown button{
+  background-color: #e63946;
+}
+
+#logout-form {
+  background-color: lightgreen;
+  margin-top: 14px;
 }
 
 .dropdown-content a {
