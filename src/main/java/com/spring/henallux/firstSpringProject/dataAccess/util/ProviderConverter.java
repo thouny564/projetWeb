@@ -39,7 +39,7 @@ public class ProviderConverter {
     public AuthorityEntity authorityModelToAuthorityEntity(Authority authorityModel) {
         if (authorityModel == null) return null;
         AuthorityEntity entity = mapper.map(authorityModel, AuthorityEntity.class);
-        // Il faut setter le userEntity associé
+
         if (authorityModel.getUser() != null) {
             entity.setUser(userModelToUserEntity(authorityModel.getUser()));
         }

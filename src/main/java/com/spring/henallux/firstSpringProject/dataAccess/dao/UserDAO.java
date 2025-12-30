@@ -68,8 +68,22 @@ public class UserDAO implements UserDataAccess {
 
     @Override
     public void update(User user) {
-        userRepository.save(converter.userModelToUserEntity(user));
+        UserEntity existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setFamilyName(user.getFamilyName());
+        existingUser.setStreet(user.getStreet());
+        existingUser.setStreetNumber(user.getStreetNumber());
+        existingUser.setPostalCode(user.getPostalCode());
+        existingUser.setCity(user.getCity());
+        existingUser.setPhoneNumber(user.getPhoneNumber());
+        existingUser.setMailAddress(user.getMailAddress());
+
+
+        userRepository.save(existingUser);
     }
+
 
     @Override
     public ArrayList<User> getUsers() {

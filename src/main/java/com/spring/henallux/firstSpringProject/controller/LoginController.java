@@ -3,7 +3,9 @@ package com.spring.henallux.firstSpringProject.controller;
 
 
 
+import com.spring.henallux.firstSpringProject.model.Constants;
 import com.spring.henallux.firstSpringProject.model.User;
+import com.spring.henallux.firstSpringProject.model.UserUpdateForm;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,8 +31,18 @@ public class LoginController {
     }
 
     @GetMapping("/authenticated")
-    public String authenticatedPage(Model model ,@AuthenticationPrincipal User user) {
-        model.addAttribute("user", user);
+    public String authenticatedPage(Model model ,@AuthenticationPrincipal User currentUser) {
+        UserUpdateForm form = new UserUpdateForm();
+        form.setFirstName(currentUser.getFirstName());
+        form.setFamilyName(currentUser.getFamilyName());
+        form.setMailAddress(currentUser.getMailAddress());
+        form.setPhoneNumber(currentUser.getPhoneNumber());
+        form.setStreet(currentUser.getStreet());
+        form.setStreetNumber(currentUser.getStreetNumber());
+        form.setPostalCode(currentUser.getPostalCode());
+        form.setCity(currentUser.getCity());
+
+        model.addAttribute(Constants.CURRENT_USER, form);
         return "integrated:authenticated";
     }
 }

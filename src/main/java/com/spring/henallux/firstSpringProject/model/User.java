@@ -163,6 +163,8 @@ public class User implements UserDetails {
                 ", streetNumber=" + streetNumber +
                 ", postalCode=" + postalCode +
                 ", city='" + city + '\'' +
+                ", mail address='" + mailAddress + '\'' +
+                ", phone number='" + phoneNumber + '\'' +
                 '}';
     }
 }
