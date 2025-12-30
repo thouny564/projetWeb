@@ -17,13 +17,8 @@
     <button class="next-btn">></button>
 
 </div>
-    <a href="${pageContext.request.contextPath}/cart?productId=${product.id}">
-        <button>Ajouter au panier</button>
-    </a>
-
-
     <form action="${pageContext.request.contextPath}/catalog" method="get">
-        <button type="submit">
+        <button id="buttonProducts" type="submit">
             Voir notre catalogue
             <img src="${pageContext.request.contextPath}/images/arrowRight.png" width="16" height="16" style="filter: brightness(0) invert(1);">
         </button>

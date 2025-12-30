@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <div class="container">
 
@@ -22,7 +23,7 @@
     <div id="productsContainer">
         <c:forEach var="product" items="${products}">
             <form action="${pageContext.request.contextPath}/cart/${product.id}" method="get">
-            <div  class="card" onclick="window.location.href='${pageContext.request.contextPath}/cart'">>
+            <div  class="card" onclick="window.location.href='${pageContext.request.contextPath}/cart'">
                     <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="${product.nameEn}" width=200 height=220>
                     <h2>${product.nameFr}</h2>
                     <p>Categorie: ${product.category.nameEn} (${product.category.nameFr})</p>

@@ -12,15 +12,12 @@
     <link type="text/css" href="<spring:url value='/css/accueil.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/cart.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/catalog.css' />" rel="stylesheet">
-
-
-
+    <link type="text/css" href="<spring:url value='/css/product.css' />" rel="stylesheet">
+    <link type="text/css" href="<spring:url value='/css/compagnyDescription.css' />" rel="stylesheet">
 
 
 </head>
 <body>
-
-
 
       <nav id="sidebar">
                 <div>
@@ -29,11 +26,9 @@
                     </a>
                 </div>
                 <div id="optionSite">
-                        <a  id="shopDescription" href="descriptionMagasin" title="magasin" style="margin-right: 20px; ">Notre magasin</a>
+                        <a id="shopDescription" href="${pageContext.request.contextPath}/compagnyDescription" title="magasin" style="margin-right: 20px; ">Notre magasin</a>
 
-
-
-                            <div class="dropdown">
+                        <div class="dropdown">
                                 <button class="dropbtn">FR<span class="arrow">∨</span></button>
                                 <ul class="dropdown-content">
                                 <li>
@@ -52,11 +47,11 @@
 
 
 
-                <a href="profil.html" title="Mon compte">
+                <a href="${pageContext.request.contextPath}/authenticated" title="Mon compte">
                     <img src="${pageContext.request.contextPath}/images/utilisateur.png" alt="Profil" class="nav-icon" width="30" height="30" style="filter: brightness(0) invert(1);">
                 </a>
 
-                <a href="panier.html" title="Mon panier">
+                <a href="${pageContext.request.contextPath}/cart" title="Mon panier">
                     <img src="${pageContext.request.contextPath}/images/ajouter-au-panier.png" alt="Panier" class="nav-icon" width="30" height="30" style="filter: brightness(0) invert(1);">
                 </a>
 
@@ -78,8 +73,8 @@
 
     <div class="footer-links">
       <a href="${pageContext.request.contextPath}/authenticated">Mon compte</a>
-      <button id="MyAccount"href="#MyAccount">S'inscrire</button>
-      <a href="${pageContext.request.contextPath}/compagnyDescription">À propos de nous</a>
+      <button id="MyAccount"href="${pageContext.request.contextPath}/authenticated">S'inscrire</button>
+      <a href="${pageContext.request.contextPath}/compagnyDescription">Notre magasin</a>
     </div>
 
     <p>© 2025 Tryhard — Tous droits réservés</p>

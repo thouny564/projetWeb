@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Conteneur principal */
+.product-container {
+    max-width: 900px;
+    margin: 50px auto 0 auto;
+    background: white;
+    display: flex;
+    gap: 50px;
+    padding: 30px 0px 30px 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+
+}
+
+/* GAUCHE */
+.product-left {
+    flex: 0 0 300px;
+}
+
+.product-left img {
+    border-radius: 8px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+#description {
+    margin-top: 10px;
+    border-top: 2px solid #eee;
+    line-height: 1.5;
+    color: #444;
+    font-family: Arial, sans-serif;
+    padding-top: 10px;
+    margin-left: 10px ;
+
+}
+
+/* DROITE */
+.product-right {
+    flex: 0.8;
+    border-left: 1px solid #eee;
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.product-right h2 {
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 28px;
+    font-weight: bold;
+    color: #e63946;
+    margin-top: 70px;
+}
+
+/* Conteneur des boutons */
+#containerButton {
+    margin-top: 0px; /* tu peux ajuster cette valeur librement */
+    gap: 10px; /* espace entre les boutons */
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #eee ;
+    padding-bottom: 40px;
+
+}
+
+.buy-now,  .add-cart {
+    padding: 14px; /* tu peux garder un padding interne pour le texte */
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center; /* centre le texte horizontalement */
+    align-items: center;
+    width: 200px;
+    height: 45px;
+}
+
+/* Boutons */
+.buy-now {
+    background-color: mediumpurple;
+    color: white;
+    border: none;
+
+
+}
+
+.buy-now:hover {
+    background-color: #40a9ff;
+}
+
+.add-cart {
+    background-color: #0e1216;
+    color: white;
+    border: none;
+
+}
+
+.add-cart:hover {
+    background-color: #333;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .product-container {
+        flex-direction: column;
+    }
+
+    .product-right {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid #eee;
+        padding-top: 30px;
+    }
+}

@@ -29,7 +29,7 @@ public class CatalogController {
     @GetMapping
     public String catalog(Model model){
 
-        /*Category fps = new Category("Jeux de tirs", "FPS Games", "Jeux de tir a la premiere personne", "First-person shooter games");
+        Category fps = new Category("Jeux de tirs", "FPS Games", "Jeux de tir a la premiere personne", "First-person shooter games");
         Category rpg = new Category("Jeux de role", "RPG Games", "Jeux de role immersifs", "Immersive role-playing games");
         Category racing = new Category("Jeux de course", "Racing Games", "Jeux de course rapides", "Fast racing games");
 
@@ -49,7 +49,7 @@ public class CatalogController {
 
         productDataAccess.add(p1);
         productDataAccess.add(p2);
-        productDataAccess.add(p3);*/
+        productDataAccess.add(p3);
 
 
 
