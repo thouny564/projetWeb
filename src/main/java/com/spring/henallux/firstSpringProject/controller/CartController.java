@@ -1,15 +1,15 @@
 package com.spring.henallux.firstSpringProject.controller;
 
 import com.spring.henallux.firstSpringProject.dataAccess.dao.ProductDataAccess;
-import com.spring.henallux.firstSpringProject.model.Cart;
-import com.spring.henallux.firstSpringProject.model.Constants;
-import com.spring.henallux.firstSpringProject.model.Product;
+import com.spring.henallux.firstSpringProject.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -35,25 +35,36 @@ public class CartController {
 
 
     @GetMapping("/cart")
-    public String viewCart(HttpSession session, Model model) {
+    public String viewCart(HttpSession session,
+                           Model model) {
+
         Cart cart = getCart(session);
         Map<Integer, Integer> items = cart.getItems();
 
-
-
         ArrayList<Product> products = new ArrayList<>();
-        for (Integer productId : items.keySet()) {
+        double cartTotal = 0.0;
+
+        for (Map.Entry<Integer, Integer> entry : items.entrySet()) {
+            Integer productId = entry.getKey();
+            Integer quantity = entry.getValue();
+
             Product p = productDataAccess.get(productId);
             if (p != null) {
                 products.add(p);
+
+                double price = p.getPrice();
+                cartTotal += price * quantity;
             }
         }
 
         model.addAttribute("products", products);
         model.addAttribute("quantities", items);
+        model.addAttribute("cartTotal", cartTotal);
 
         return "integrated:cart";
     }
+
+
 
 
     @PostMapping("/cart/add/{productId}")
@@ -97,7 +108,15 @@ public class CartController {
         Cart cart = getCart(session);
         Map<Integer, Integer> items = cart.getItems();
 
-        if (quantity > 0) {
+        Product product = productDataAccess.get(productId);
+
+
+        if (product == null) {
+            return "redirect:/cart";
+        }
+
+
+        if (quantity != null && quantity > 0 && quantity <= product.getStock()) {
             items.put(productId, quantity);
         } else {
             items.remove(productId);
@@ -108,16 +127,20 @@ public class CartController {
     }
 
 
+
     @PostMapping("/cart/delete/{productId}")
-    public String deleteFromCart(@PathVariable Integer productId, HttpSession session) {
+    public String deleteFromCart(
+            @PathVariable Integer productId,
+            HttpSession session
+    ) {
         Cart cart = getCart(session);
-        Map<Integer, Integer> items = cart.getItems();
 
-        items.remove(productId);
-
+        cart.getItems().remove(productId);
         session.setAttribute(Constants.CART, cart);
+
         return "redirect:/cart";
     }
+
 
 
 

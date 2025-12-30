@@ -23,7 +23,7 @@ public class SecurityConfiguration {
 
     private static final String LOGIN_PAGE = "/login";
 
-    private static final String[] USER_PAGE = new String[] {"/authenticated", "/user/**"};
+    private static final String[] USER_PAGE = new String[] {"/authenticated", "/user/**", "/order", "/order/**"};
 
 
     private static final String[] PUBLIC_ROUTES = new String[]{
@@ -61,7 +61,7 @@ public class SecurityConfiguration {
                 .formLogin()
                 .loginPage(LOGIN_PAGE)          // page de login
                 .loginProcessingUrl(LOGIN_PAGE) // URL POST pour authentification
-                .defaultSuccessUrl("/authenticated", true)
+                .defaultSuccessUrl("/authenticated", false)
                 .failureUrl(LOGIN_PAGE + "?error=true")
                 .permitAll()
 

@@ -24,7 +24,7 @@ public class OrderLineEntity implements Serializable {
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private CustomerOrderEntity order;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private ProductEntity product;
 

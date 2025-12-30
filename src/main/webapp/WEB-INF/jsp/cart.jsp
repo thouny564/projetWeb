@@ -1,6 +1,14 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <h1>Mon Panier</h1>
+
+<!-- Message de confirmation commande -->
+<c:if test="${not empty successMessage}">
+    <div class="success">
+        <c:out value="${successMessage}" />
+    </div>
+</c:if>
 
 <table id="cart-table" class="cart-table">
     <thead>
@@ -11,8 +19,10 @@
             <th>Stock</th>
             <th>Quantité</th>
             <th>Actions</th>
+            <th>Total</th>
         </tr>
     </thead>
+
     <tbody>
         <c:forEach var="product" items="${products}">
             <tr class="cart-row" id="product-${product.id}">
@@ -23,12 +33,11 @@
                     <strong>${product.nameEn} (${product.nameFr})</strong><br/>
                     ${product.descriptionEn}<br/>
                     ${product.descriptionFr}<br/>
-                    Catégorie: ${product.category.nameEn} (${product.category.nameFr})
+                    Catégorie : ${product.category.nameEn} (${product.category.nameFr})
                 </td>
                 <td class="cart-price">${product.price} €</td>
                 <td class="cart-stock">${product.stock}</td>
                 <td class="cart-quantity">
-                    <!-- Formulaire select pour mettre à jour la quantité -->
                     <form class="update-form" action="${pageContext.request.contextPath}/cart/update/${product.id}" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <select name="quantity" class="quantity-select">
@@ -40,38 +49,51 @@
                     </form>
                 </td>
                 <td class="cart-actions">
-
-
-                    <!-- Ajouter 1 -->
                     <form class="add-form" action="${pageContext.request.contextPath}/cart/add/${product.id}" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <button type="submit" class="add-btn">+1</button>
                     </form>
 
-                    <!-- Retirer 1 -->
                     <form class="remove-form" action="${pageContext.request.contextPath}/cart/remove/${product.id}" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <button type="submit" class="remove-btn">-1</button>
                     </form>
 
-                    <!-- Supprimer -->
                     <form class="delete-form" action="${pageContext.request.contextPath}/cart/delete/${product.id}" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <button type="submit" class="delete-btn">Supprimer</button>
                     </form>
                 </td>
+                <td class="cart-total">${product.price * quantities[product.id]} €</td>
             </tr>
         </c:forEach>
     </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="6" style="text-align: right;">
+                <strong>Total panier :</strong>
+            </td>
+            <td><strong>${cartTotal} €</strong></td>
+        </tr>
+    </tfoot>
 </table>
 
-
-
-<!-- Formulaire de test avec produit ID 1 --> <form action="${pageContext.request.contextPath}/cart/add/1" method="post"> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <button type="submit">Ajouter produit ID 1 au panier</button> </form>
-
-
-<!-- Formulaire de test pour retirer produit ID 1 -->
-<form action="${pageContext.request.contextPath}/cart/remove/1" method="post">
+<!-- Bouton Passer commande -->
+<form id="order-btn-form" action="${pageContext.request.contextPath}/order" method="post" onsubmit="return confirm('Confirmer la commande ?');">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    <button type="submit">Retirer produit ID 1 du panier</button>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <button type="submit" id="order-btn">Passer commande</button>
 </form>
+
+<c:if test="${not empty errorMessage}">
+    <div class="emptyCartError">
+        <c:out value="${errorMessage}" />
+    </div>
+</c:if>
+
+
+
+
+
+<!-- Formulaire de test avec produit ID 1 --> <form action="${pageContext.request.contextPath}/cart/add/1" method="post"> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <button type="submit">Ajouter produit ID 1 au panier</button> </form> <!-- Formulaire de test pour retirer produit ID 1 --> <form action="${pageContext.request.contextPath}/cart/remove/1" method="post"> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <button type="submit">Retirer produit ID 1 du panier</button> </form>
