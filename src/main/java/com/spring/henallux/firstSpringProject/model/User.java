@@ -1,9 +1,6 @@
 package com.spring.henallux.firstSpringProject.model;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 
 import org.springframework.security.core.GrantedAuthority;
@@ -55,12 +52,24 @@ public class User implements UserDetails {
     @NotNull
     private boolean enabled;
 
+
+    @NotNull(message = "Phone number cannot be null")
+    @Size(min = 4, max = 20, message = "Phone number must be between 4 and 20 characters")
+    private String phoneNumber;
+
+    @NotBlank(message = "Email cannot be empty")
+    @Size(max = 254, message = "Email must be at most 254 characters")
+    @Email(message="Mail address invalid")
+    private String mailAddress;
+
+
     private List<Authority> authorities;
 
     public User() {}
 
     public User(String username, String password, String firstName, String familyName, String street,
-                Integer streetNumber, Integer postalCode, String city, boolean enabled) {
+                Integer streetNumber, Integer postalCode, String city, boolean enabled,
+                String phoneNumber, String mailAddress) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -70,8 +79,11 @@ public class User implements UserDetails {
         this.postalCode = postalCode;
         this.city = city;
         this.enabled = enabled;
+        this.phoneNumber = phoneNumber;
+        this.mailAddress = mailAddress;
         this.authorities = new ArrayList<>();
     }
+
 
 
     public Integer getId() { return id; }
@@ -84,6 +96,14 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
+
+
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public String getMailAddress() { return mailAddress; }
+    public void setMailAddress(String mailAddress) { this.mailAddress = mailAddress; }
+
 
 
     public String getPassword() { return password; }

@@ -66,87 +66,69 @@ public class SignupController {
 
 
     @RequestMapping(value = "/submitSignup", method = RequestMethod.POST)
-    public String getSignUpData(Model model, @Valid @ModelAttribute(value = Constants.CURRENT_USER) User userForm, final BindingResult errors){
-        if (!errors.hasErrors()){
+    public String getSignUpData(Model model,
+                                @Valid @ModelAttribute(value = Constants.CURRENT_USER) User userForm,
+                                final BindingResult errors) {
 
+        PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
-            PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+        sanitizeField(userForm.getUsername(), "username", errors, policy, "Nom d'utilisateur invalide");
+        sanitizeField(userForm.getFirstName(), "firstName", errors, policy, "Prénom invalide");
+        sanitizeField(userForm.getFamilyName(), "familyName", errors, policy, "Nom de famille invalide");
+        sanitizeField(userForm.getStreet(), "street", errors, policy, "Rue invalide");
+        sanitizeField(userForm.getCity(), "city", errors, policy, "Ville invalide");
+        sanitizeField(userForm.getPhoneNumber(), "phoneNumber", errors, policy, "Numéro de téléphone invalide");
 
-            String originalUsername = userForm.getUsername();
-            String sanitizedUsername = policy.sanitize(originalUsername);
-
-
-            if (!originalUsername.equals(sanitizedUsername)) {
-                errors.rejectValue(
-                        "username",
-                        "username.invalid",
-                        "Nom d'utilisateur invalide"
-                );
-                return "integrated:signup";
-            }
-
-
-            User existingUser = userDataAccess.getByUsername(userForm.getUsername());
-
-            if (existingUser != null){
-                errors.rejectValue(
-                        "username",
-                        "username.exists",
-                        "Ce nom d'utilisateur existe déjà"
-                );
-
-                return "integrated:signup";
-            }
-
-            String hashedPassword = passwordEncoder.encode(userForm.getPassword());
-
-
-            User user = new User(
-                    userForm.getUsername(),
-                    hashedPassword,
-                    userForm.getFirstName(),
-                    userForm.getFamilyName(),
-                    userForm.getStreet(),
-                    userForm.getStreetNumber(),
-                    userForm.getPostalCode(),
-                    userForm.getCity(),
-                    true
-            );
-
-
-            Authority roleUser = new Authority("ROLE_USER", user);
-            user.addAuthority(roleUser);
-
-
-            userDataAccess.add(user);
-            /*User newUser = userDataAccess.getByUsername(user.getUsername());
-
-
-
-            Category categoryFPS = new Category("Jeux tirs", "Fps games", "Jeu de tirs", "Shooting games");
-            categoryDataAccess.add(categoryFPS);
-
-            Product product = new Product("Elden Ring", "Elden Ring", "Jeu difficile", "Difficult game", 59.99, 15, "", true, categoryFPS);
-            productDataAccess.add(product);
-            System.out.println(categoryDataAccess.getCategories());
-            System.out.println(productDataAccess.getProducts());
-            for (Product p : productDataAccess.getProducts()){
-                System.out.println(p.getDescriptionEn());
-            }
-
-            CustomerOrder customerOrder = new CustomerOrder(LocalDateTime.now(), true, "PAID", 120, newUser);
-            customerOrderDataAccess.add(customerOrder);
-            System.out.println(customerOrderDataAccess.getAllOrders());
-
-
-            orderLineDataAccess.add(new OrderLine(2, 60, customerOrder, product));
-            System.out.println(orderLineDataAccess.getOrdersLines());
-            User testUser = userDataAccess.getByUsername(user.getUsername());
-            System.out.print(testUser.getAuthorities());*/
-            return "redirect:/welcome";
+        if (errors.hasErrors()) {
+            return "integrated:signup";
         }
 
 
-        return "integrated:signup";
+        if (userDataAccess.getByUsername(userForm.getUsername()) != null) {
+            errors.rejectValue("username", "username.exists", "Ce nom d'utilisateur existe déjà");
+            return "integrated:signup";
+        }
+
+
+        if (userDataAccess.getByMailAddress(userForm.getMailAddress()) != null) {
+            errors.rejectValue("mailAddress", "mailAddress.exists", "Cette adresse email existe déjà");
+            return "integrated:signup";
+        }
+
+
+        String hashedPassword = passwordEncoder.encode(userForm.getPassword());
+
+
+        User user = new User(
+                userForm.getUsername(),
+                hashedPassword,
+                userForm.getFirstName(),
+                userForm.getFamilyName(),
+                userForm.getStreet(),
+                userForm.getStreetNumber(),
+                userForm.getPostalCode(),
+                userForm.getCity(),
+                true,
+                userForm.getPhoneNumber(),
+                userForm.getMailAddress()
+        );
+
+
+        Authority roleUser = new Authority("ROLE_USER", user);
+        user.addAuthority(roleUser);
+
+
+        userDataAccess.add(user);
+
+        return "redirect:/welcome";
     }
+
+    private void sanitizeField(String fieldValue, String fieldName, BindingResult errors, PolicyFactory policy, String message) {
+        if (!policy.sanitize(fieldValue).equals(fieldValue)) {
+            errors.rejectValue(fieldName, fieldName + ".invalid", message);
+        }
+    }
+
+
+
 }

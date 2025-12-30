@@ -12,4 +12,5 @@ public interface UserDataAccess {
     ArrayList<User> getUsers();
 
     User getByUsername(String username);
+    User getByMailAddress(String  mailAddress);
 }

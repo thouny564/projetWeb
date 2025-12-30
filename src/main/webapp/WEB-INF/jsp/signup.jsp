@@ -40,6 +40,19 @@
             <form:errors path="password" cssClass="error" />
         </div>
 
+        <div class="form-group">
+            <form:label path="phoneNumber">Phone Number:</form:label>
+            <form:input path="phoneNumber" />
+            <form:errors path="phoneNumber" cssClass="error" />
+        </div>
+
+        <div class="form-group">
+            <form:label path="mailAddress">Email Address:</form:label>
+            <form:input path="mailAddress" type="email" />
+            <form:errors path="mailAddress" cssClass="error" />
+        </div>
+
+
         <form:hidden path="enabled" value="true"/>
 
 
