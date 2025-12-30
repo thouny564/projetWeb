@@ -33,6 +33,15 @@ public class UserDAO implements UserDataAccess {
         return null;
     }
 
+    @Override
+    public User getByMailAddress(String mailAddress) {
+        UserEntity entity = userRepository.findByMailAddress(mailAddress);
+        if (entity != null) {
+            return converter.userEntityToUserModel(entity);
+        }
+        return null;
+    }
+
 
     @Override
     public void add(User user) {

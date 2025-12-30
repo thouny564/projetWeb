@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "\"User\"")
+@Table(name = "\"user\"")
 public class UserEntity implements Serializable {
 
     @Id
@@ -46,11 +46,19 @@ public class UserEntity implements Serializable {
     private List<AuthorityEntity> authorities = new ArrayList<>();
 
 
+    @Column(name = "phone_number", nullable = false, length = 20)
+    private String phoneNumber;
+
+    @Column(name = "mail_address", nullable = false, length = 254, unique = true)
+    private String mailAddress;
+
+
 
     public UserEntity() {}
 
     public UserEntity(String username, String password, String firstName, String familyName, String street,
-                      Integer streetNumber, Integer postalCode, String city, Boolean enabled) {
+                      Integer streetNumber, Integer postalCode, String city, Boolean enabled,
+                      String phoneNumber, String mailAddress) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -60,6 +68,25 @@ public class UserEntity implements Serializable {
         this.postalCode = postalCode;
         this.city = city;
         this.enabled = enabled;
+        this.phoneNumber = phoneNumber;
+        this.mailAddress = mailAddress;
+    }
+
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getMailAddress() {
+        return mailAddress;
+    }
+
+    public void setMailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
     }
 
 
