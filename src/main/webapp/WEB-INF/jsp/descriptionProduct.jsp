@@ -10,7 +10,6 @@
         </p>
     </div>
 
-
     <div class="product-right">
         <h2>FF7 Rebirth ps5</h2>
         <p style="border-top: 2px solid#eee; padding-top: 10px;">Catégories : aventure, combat</p>

@@ -41,6 +41,8 @@ public class SecurityConfiguration {
             "/cart/**",
             "/js/**",
             "/catalog",
+            "/product",
+            "/product/**"
     };
     private static final String[] ADMIN_ROUTES = new String[]{
             "/admin/**"

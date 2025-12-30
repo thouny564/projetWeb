@@ -1,3 +1,6 @@
+<%@ page pageEncoding="UTF-8"
+         contentType="text/html; charset=UTF-8"%>
+
 <h1 id="nomSite">Tryhard</h1>
 <div id="titleCarousel">
 <p style="font-size: 30px; margin-left: 220px; font-weight: bold; ">Dernier jeu en vente</p>

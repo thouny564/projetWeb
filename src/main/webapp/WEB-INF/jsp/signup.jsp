@@ -29,25 +29,25 @@
 
 
         <div class="form-group">
-            <form:label path="username">Username:</form:label>
+            <form:label path="username"><spring:message code="username"/>:</form:label>
             <form:input path="username" />
             <form:errors path="username" cssClass="error" />
         </div>
 
         <div class="form-group">
-            <form:label path="password">Password:</form:label>
+            <form:label path="password"><spring:message code="password"/>:</form:label>
             <form:password path="password" />
             <form:errors path="password" cssClass="error" />
         </div>
 
         <div class="form-group">
-            <form:label path="phoneNumber">Phone Number:</form:label>
+            <form:label path="phoneNumber"><spring:message code="phoneNumber"/>:</form:label>
             <form:input path="phoneNumber" />
             <form:errors path="phoneNumber" cssClass="error" />
         </div>
 
         <div class="form-group">
-            <form:label path="mailAddress">Email Address:</form:label>
+            <form:label path="mailAddress"><spring:message code="email"/>:</form:label>
             <form:input path="mailAddress" type="email" />
             <form:errors path="mailAddress" cssClass="error" />
         </div>
@@ -57,37 +57,37 @@
 
 
         <div class="form-group">
-            <form:label path="firstName">First Name:</form:label>
+            <form:label path="firstName"><spring:message code="firstName"/>:</form:label>
             <form:input path="firstName" />
             <form:errors path="firstName" cssClass="error" />
         </div>
 
         <div class="form-group">
-            <form:label path="familyName">Family Name:</form:label>
+            <form:label path="familyName"><spring:message code="familyName"/>:</form:label>
             <form:input path="familyName" />
             <form:errors path="familyName" cssClass="error" />
         </div>
 
         <div class="form-group">
-            <form:label path="street">Street:</form:label>
+            <form:label path="street"><spring:message code="street"/>:</form:label>
             <form:input path="street" />
             <form:errors path="street" cssClass="error" />
         </div>
 
         <div class="form-group">
-            <form:label path="streetNumber">Street Number:</form:label>
+            <form:label path="streetNumber"><spring:message code="streetNumber"/>:</form:label>
             <form:input path="streetNumber" type="number"/>
             <form:errors path="streetNumber" cssClass="error" />
         </div>
 
         <div class="form-group">
-            <form:label path="postalCode">Postal Code:</form:label>
+            <form:label path="postalCode"><spring:message code="postalCode"/>:</form:label>
             <form:input path="postalCode" type="number" min="0"/>
             <form:errors path="postalCode" cssClass="error" />
         </div>
 
         <div class="form-group">
-            <form:label path="city">City:</form:label>
+            <form:label path="city"><spring:message code="city"/>:</form:label>
             <form:input path="city" />
             <form:errors path="city" cssClass="error" />
         </div>
@@ -95,7 +95,7 @@
 
 
         <div class="form-group">
-            <form:button type="submit">Submit</form:button>
+            <form:button type="submit"><spring:message code="submitBoutton"/></form:button>
 
         </div>
     </form:form>
