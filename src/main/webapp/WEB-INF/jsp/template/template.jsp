@@ -8,6 +8,11 @@
 <html>
 <head>
     <link type="text/css" href="<spring:url value='/css/header.css' />" rel="stylesheet">
+    <link type="text/css" href="<spring:url value='/css/login.css' />" rel="stylesheet">
+    <link type="text/css" href="<spring:url value='/css/accueil.css' />" rel="stylesheet">
+
+
+
 
 </head>
 <body>
@@ -16,8 +21,9 @@
 
       <nav id="sidebar">
                 <div>
-                <a href="${pageContext.request.contextPath}/welcome" title="accueil">
-                    <img src="${pageContext.request.contextPath}/images/jeux.png" alt="Accueil" width="40" height="40" style="margin-left: 20px;">
+                    <a href="${pageContext.request.contextPath}/welcome" title="accueil">
+                        <img src="${pageContext.request.contextPath}/images/jeux.png" alt="Accueil" width="40" height="40" style="margin-left: 20px;">
+                    </a>
                 </div>
                 <div id="optionSite">
                         <a  id="shopDescription" href="descriptionMagasin" title="magasin" style="margin-right: 20px; ">Notre magasin</a>
@@ -51,7 +57,7 @@
                     <img src="${pageContext.request.contextPath}/images/ajouter-au-panier.png" alt="Panier" class="nav-icon" width="30" height="30" style="filter: brightness(0) invert(1);">
                 </a>
 
-            </div>
+                </div>
 
         </nav>
 
@@ -60,9 +66,27 @@
 
 
 
-
+    <div  class="main-content">
     <tiles:insertAttribute name="main-content" />
+    </div>
+
+<footer>
+    <div class="footer-content">
+
+    <div class="footer-links">
+      <a href="${pageContext.request.contextPath}/authenticated">Mon compte</a>
+      <button id="MyAccount"href="#MyAccount">S'inscrire</button>
+      <a href="${pageContext.request.contextPath}/compagnyDescription">À propos de nous</a>
+    </div>
+
+    <p>© 2025 Tryhard — Tous droits réservés</p>
+  </div>
+</footer>
+
+      <script src="<spring:url value='/js/carousel.js' />"></script>
 
 
 </body>
+
+
 </html>
