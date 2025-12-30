@@ -22,10 +22,40 @@ public class CartController {
     }
 
 
+
+
+
+    @PostMapping("/cart/remove/{productId}")
+    public String removeFromCart(
+            @PathVariable Long productId,
+            @ModelAttribute(Constants.CART) Cart cart
+    ) {
+        Map<Long, Integer> items = cart.getItems();
+
+        if (items.containsKey(productId)) {
+            int quantity = items.get(productId);
+
+            if (quantity > 1) {
+                items.put(productId, quantity - 1);
+            } else {
+                items.remove(productId);
+            }
+        }
+
+        // Affichage dans la console pour debug
+        for (Map.Entry<Long, Integer> entry : items.entrySet()) {
+            System.out.println("Produit ID: " + entry.getKey() + ", Quantité: " + entry.getValue());
+        }
+
+        return "";
+    }
+
+
+
     @PostMapping("/cart/add/{productId}")
     public String addToCart(
             @PathVariable Long productId,
-            @ModelAttribute("cart") Cart cart
+            @ModelAttribute(Constants.CART) Cart cart
     ) {
         Map<Long, Integer> items = cart.getItems();
         if (items.containsKey(productId)) {
