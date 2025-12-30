@@ -79,6 +79,11 @@
      border-top: 4px solid;
 }
 
+h1 {
+
+    margin-left: 20px;
+}
+
 footer {
     padding: 20px;
     background-color: #333;

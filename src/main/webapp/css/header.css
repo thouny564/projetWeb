@@ -1,3 +1,20 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+.main-content {
+  flex: 1;
+}
 #sidebar {
   display: flex;
   align-items: center;
@@ -31,6 +48,11 @@
   font-weight: 500;
   transition: color 0.3s;
 }
+
+.nav-links a:hover {
+  color: #6dc7e3; /* Changement de couleur au survol (le rouge de votre bouton) */
+}
+
 .dropdown button{
   color: white;
   border-radius: 5px;
@@ -41,7 +63,7 @@
   font-size: 16px;
   cursor: pointer;
   outline: none;
-  appearance: none; /* Enlève la flèche par défaut du navigateur /
+  appearance: none;
   -webkit-appearance: none;
   padding: 5px 5px;
 }
@@ -90,4 +112,56 @@
 .arrow {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+
+footer {
+  padding: 20px;
+  background-color: #333;
+  color: white;
+
+
+}
+
+.footer-links{
+  display: flex;
+  flex-direction: column; /* affichage en colonne */
+  gap: 10px;
+}
+
+
+.footer-content p {
+  margin-top: 25px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  color: white;
+  display: block;
+
+}
+
+.footer-links a:hover{
+  color: mediumpurple;
+}
+
+
+#MyAccount {
+  color: white;
+  border-radius: 10px;
+  background-color: #e63946;
+  border: none;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  appearance: none; /* Enlève la flèche par défaut du navigateur */
+  -webkit-appearance: none;
+  padding: 5px 5px;
+  width: 100px;
+
+
 }
