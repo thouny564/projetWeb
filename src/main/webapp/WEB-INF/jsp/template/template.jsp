@@ -14,10 +14,14 @@
     <link type="text/css" href="<spring:url value='/css/catalog.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/product.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/compagnyDescription.css' />" rel="stylesheet">
+    <link type="text/css" href="<spring:url value='/css/authenticated.css' />" rel="stylesheet">
+
 
 
 </head>
 <body>
+
+
 
       <nav id="sidebar">
                 <div>

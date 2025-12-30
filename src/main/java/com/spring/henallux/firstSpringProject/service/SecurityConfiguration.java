@@ -23,7 +23,8 @@ public class SecurityConfiguration {
 
     private static final String LOGIN_PAGE = "/login";
 
-    private static final String USER_PAGE = "/authenticated";
+    private static final String[] USER_PAGE = new String[] {"/authenticated", "/user/**"};
+
 
     private static final String[] PUBLIC_ROUTES = new String[]{
             "/",
@@ -39,7 +40,7 @@ public class SecurityConfiguration {
             "/cart",
             "/cart/**",
             "/js/**",
-            "/catalog"
+            "/catalog",
     };
     private static final String[] ADMIN_ROUTES = new String[]{
             "/admin/**"
