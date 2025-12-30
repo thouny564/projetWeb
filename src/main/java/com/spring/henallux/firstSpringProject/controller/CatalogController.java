@@ -29,27 +29,28 @@ public class CatalogController {
     @GetMapping
     public String catalog(Model model){
 
-        /*Category fps = new Category("Jeux de tirs", "FPS Games", "Jeux de tir à la première personne", "First-person shooter games");
-        Category rpg = new Category("Jeux de rôle", "RPG Games", "Jeux de rôle immersifs", "Immersive role-playing games");
+        /*Category fps = new Category("Jeux de tirs", "FPS Games", "Jeux de tir a la premiere personne", "First-person shooter games");
+        Category rpg = new Category("Jeux de role", "RPG Games", "Jeux de role immersifs", "Immersive role-playing games");
         Category racing = new Category("Jeux de course", "Racing Games", "Jeux de course rapides", "Fast racing games");
 
         categoryDataAccess.add(fps);
         categoryDataAccess.add(rpg);
         categoryDataAccess.add(racing);
 
-        // Création de produits
+        // Creation de produits
         Product p1 = new Product("Elden Ring", "Elden Ring", "Jeu difficile et immersif", "Challenging and immersive game",
                 59.99, 15, "eldenring.png", true, rpg);
 
         Product p2 = new Product("Call of Duty", "Call of Duty", "FPS populaire", "Popular FPS game",
                 49.99, 20, "cod.png", true, fps);
 
-        Product p3 = new Product("Forza Horizon", "Forza Horizon", "Course automobile réaliste", "Realistic car racing",
+        Product p3 = new Product("Forza Horizon", "Forza Horizon", "Course automobile realiste", "Realistic car racing",
                 39.99, 10, "forza.png", true, racing);
 
         productDataAccess.add(p1);
         productDataAccess.add(p2);
         productDataAccess.add(p3);*/
+
 
 
         model.addAttribute("products", productDataAccess.getProducts());

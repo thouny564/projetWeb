@@ -3,7 +3,7 @@
 <p style="font-size: 30px; margin-left: 220px; font-weight: bold; ">Dernier jeu en vente</p>
 </div>
 
-<div id="principale">
+<a id="principale">
 
 <div id="containerImage">
     <div class="carousel-images" >
@@ -17,13 +17,19 @@
     <button class="next-btn">></button>
 
 </div>
+    <a href="${pageContext.request.contextPath}/cart?productId=${product.id}">
+        <button>Ajouter au panier</button>
+    </a>
 
 
-    <button  id="buttonProducts">
-Voir notre catalogue
-    <img src="${pageContext.request.contextPath}/images/arrowRight.png" width: 16px height="16px" style="filter: brightness(0) invert(1); ">
+    <form action="${pageContext.request.contextPath}/catalog" method="get">
+        <button type="submit">
+            Voir notre catalogue
+            <img src="${pageContext.request.contextPath}/images/arrowRight.png" width="16" height="16" style="filter: brightness(0) invert(1);">
+        </button>
+    </form>
 
-    </button>
+</a>
 <div id="LicenseEnVente">
 
 </div>

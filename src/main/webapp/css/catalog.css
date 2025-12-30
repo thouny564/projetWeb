@@ -1,0 +1,75 @@
+
+.container {
+    display: flex;
+    padding: 20px;
+    gap: 30px;
+
+}
+
+#productsContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+#menu-Container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin: 20px;
+}
+
+#search_filters{
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 230px;
+    border-radius: 8px;
+}
+#menu-text {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card img {
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card h2 {
+    margin: 12px 0 8px 0;
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e74c3c;
+    margin-bottom: 12px;
+}
+
+.card button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
