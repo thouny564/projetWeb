@@ -10,6 +10,7 @@
     <link type="text/css" href="<spring:url value='/css/header.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/login.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/accueil.css' />" rel="stylesheet">
+    <link type="text/css" href="<spring:url value='/css/cart.css' />" rel="stylesheet">
 
 
 
