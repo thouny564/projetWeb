@@ -6,7 +6,8 @@
 
 <html>
 <head>
-    <title>${title}</title>
+    <c:out value="${user.username}" />
+
 </head>
 <body>
 

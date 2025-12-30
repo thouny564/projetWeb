@@ -17,6 +17,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
+
+
 
 @Controller
 @RequestMapping("/register")
@@ -64,6 +68,23 @@ public class SignupController {
     @RequestMapping(value = "/submitSignup", method = RequestMethod.POST)
     public String getSignUpData(Model model, @Valid @ModelAttribute(value = Constants.CURRENT_USER) User userForm, final BindingResult errors){
         if (!errors.hasErrors()){
+
+
+            PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+
+            String originalUsername = userForm.getUsername();
+            String sanitizedUsername = policy.sanitize(originalUsername);
+
+
+            if (!originalUsername.equals(sanitizedUsername)) {
+                errors.rejectValue(
+                        "username",
+                        "username.invalid",
+                        "Nom d'utilisateur invalide"
+                );
+                return "integrated:signup";
+            }
+
 
             User existingUser = userDataAccess.getByUsername(userForm.getUsername());
 
