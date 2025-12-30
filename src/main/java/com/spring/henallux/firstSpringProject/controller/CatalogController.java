@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/catalog")
@@ -27,7 +28,7 @@ public class CatalogController {
 
 
     @GetMapping
-    public String catalog(Model model){
+    public String catalog(Model model, Locale locale){
 
         /*Category fps = new Category("Jeux de tirs", "FPS Games", "Jeux de tir à la première personne", "First-person shooter games");
         Category rpg = new Category("Jeux de rôle", "RPG Games", "Jeux de rôle immersifs", "Immersive role-playing games");
@@ -54,6 +55,7 @@ public class CatalogController {
 
         model.addAttribute("products", productDataAccess.getProducts());
         model.addAttribute("categories", categoryDataAccess.getCategories());
+        model.addAttribute("lang", locale.getLanguage());
         return "integrated:catalog";
     }
 
