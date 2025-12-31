@@ -63,10 +63,10 @@ public class CartController {
 
 
 
-    @PostMapping("/cart/add/{productId}/{quantity}")
+    @PostMapping("/cart/addCustomQuantity/{productId}")
     public String addToCart(
             @PathVariable Integer productId,
-            @PathVariable Integer quantity,
+            @RequestParam Integer quantity,
             HttpSession session
     ) {
         Product product = productDataAccess.get(productId);
@@ -81,7 +81,7 @@ public class CartController {
         int newQty = currentQty + quantity;
 
         if (newQty > product.getStock()) {
-            return "redirect:/cart";
+            newQty = product.getStock();
         }
 
         items.put(productId, newQty);
@@ -110,6 +110,11 @@ public class CartController {
 
         return "redirect:/cart";
     }
+
+
+
+
+
 
 
 

@@ -97,4 +97,14 @@
 
 
 
-<!-- Formulaire de test avec produit ID 1 --> <form action="${pageContext.request.contextPath}/cart/add/1" method="post"> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <button type="submit">Ajouter produit ID 1 au panier</button> </form> <!-- Formulaire de test pour retirer produit ID 1 --> <form action="${pageContext.request.contextPath}/cart/remove/1" method="post"> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <button type="submit">Retirer produit ID 1 du panier</button> </form>
+<!-- Ajouter le produit ID 1 au panier -->
+<form action="${pageContext.request.contextPath}/cart/add/1" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <button type="submit">Ajouter produit ID 1 au panier</button>
+</form>
+
+<!-- Retirer le produit ID 1 du panier -->
+<form action="${pageContext.request.contextPath}/cart/remove/1" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <button type="submit">Retirer produit ID 1 du panier</button>
+</form>
