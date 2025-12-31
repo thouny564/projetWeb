@@ -71,7 +71,7 @@ public class CartController {
     ) {
         Product product = productDataAccess.get(productId);
         if (product == null || quantity <= 0) {
-            return "redirect:/cart";
+            return "redirect:/product/" + productId;
         }
 
         Cart cart = getCart(session);
@@ -85,7 +85,7 @@ public class CartController {
         }
 
         items.put(productId, newQty);
-        return "redirect:/cart";
+        return "redirect:/product/" + productId;
     }
 
 
