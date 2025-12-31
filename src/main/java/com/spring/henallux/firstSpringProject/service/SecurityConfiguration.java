@@ -42,7 +42,10 @@ public class SecurityConfiguration {
             "/js/**",
             "/catalog",
             "/product",
-            "/product/**"
+            "/product/**",
+            "/category",
+            "/category/**"
+
     };
     private static final String[] ADMIN_ROUTES = new String[]{
             "/admin/**"

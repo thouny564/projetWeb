@@ -15,4 +15,7 @@ public interface ProductDataAccess {
     void update(Product product);
 
     ArrayList<Product> getProducts();
+
+    ArrayList<Product> getProductsByCategoryId(Integer categoryId);
+
 }
