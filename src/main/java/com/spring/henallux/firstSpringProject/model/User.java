@@ -14,38 +14,38 @@ public class User implements UserDetails {
 
     private Integer id;
 
-    @NotNull(message = "Username cannot be null")
-    @Size(min = 2, max = 50, message = "Username must be between 2 and 50 characters")
+    @NotNull
+    @Size(min = 2, max = 50)
     private String username;
 
-    @NotNull(message = "Password cannot be null")
-    @Size(min = 8, max = 70, message = "Password must be between 8 and 70 characters")
+    @NotNull
+    @Size(min = 8, max = 70)
     private String password;
 
-    @NotNull(message = "First name cannot be null")
-    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
+    @NotNull
+    @Size(min = 2, max = 50)
     private String firstName;
 
-    @NotNull(message = "Family name cannot be null")
-    @Size(min = 2, max = 50, message = "Family name must be between 2 and 50 characters")
+    @NotNull
+    @Size(min = 2, max = 50)
     private String familyName;
 
-    @NotNull(message = "Street cannot be null")
-    @Size(min = 2, max = 100, message = "Street must be between 2 and 100 characters")
+    @NotNull
+    @Size(min = 2, max = 100)
     private String street;
 
-    @NotNull(message = "Street number cannot be null")
-    @Min(value = 1, message = "Street number must be at least 1")
-    @Max(value = 9999, message = "Street number must be at most 9999")
+    @NotNull
+    @Min(value = 1)
+    @Max(value = 9999)
     private Integer streetNumber;
 
-    @NotNull(message = "Postal code cannot be null")
-    @Min(value = 1000, message = "Postal code must be at least 1000")
-    @Max(value = 9999, message = "Postal code must be at most 9999")
+    @NotNull
+    @Min(value = 1000)
+    @Max(value = 9999)
     private Integer postalCode;
 
-    @NotNull(message = "City cannot be null")
-    @Size(min = 2, max = 50, message = "City must be between 2 and 50 characters")
+    @NotNull
+    @Size(min = 2, max = 50)
     private String city;
 
 
@@ -53,13 +53,13 @@ public class User implements UserDetails {
     private boolean enabled;
 
 
-    @NotNull(message = "Phone number cannot be null")
-    @Size(min = 4, max = 20, message = "Phone number must be between 4 and 20 characters")
+    @NotNull
+    @Size(min = 4, max = 20)
     private String phoneNumber;
 
-    @NotBlank(message = "Email cannot be empty")
-    @Size(max = 254, message = "Email must be at most 254 characters")
-    @Email(message="Mail address invalid")
+    @NotBlank
+    @Size(max = 254)
+    @Email
     private String mailAddress;
 
 
