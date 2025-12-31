@@ -34,7 +34,7 @@
     </div>
     <div id="productsContainer">
         <c:forEach var="product" items="${products}">
-            <a  style="text-decoration: none" href="${pageContext.request.contextPath}/product/${product.id}">
+
             <div class="card">
 
                 <!-- Lien vers la fiche produit -->

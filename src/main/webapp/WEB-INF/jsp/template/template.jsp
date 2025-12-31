@@ -41,6 +41,12 @@
                     </a>
                 </div>
                 <div id="optionSite">
+                        <c:choose>
+                        <c:when test="${not empty  pageContext.request.userPrincipal}">
+                         <p><spring:message code="welcomeUser"/> ${pageContext.request.userPrincipal.name} !</p>
+                        </c:when>
+
+                        </c:choose>
                         <a id="shopDescription" href="${pageContext.request.contextPath}/compagnyDescription" title="<spring:message code='shop'/>"  style="margin-right: 20px; "><spring:message code="shop"/></a>
 
                         <div class="dropdown">
@@ -64,6 +70,7 @@
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <button id="logout-form" type="submit"><spring:message code="deconnectText"/></button>
                     </form>
+
                     </c:when>
 
                     <c:otherwise>
