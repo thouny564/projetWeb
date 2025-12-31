@@ -6,7 +6,7 @@ body {
 /* Conteneur principal */
 .product-container {
     max-width: 900px;
-    margin: 50px auto 50px auto;
+    margin: 50px auto 60px auto;
     background: white;
     display: flex;
     gap: 50px;
@@ -25,6 +25,7 @@ body {
     border-radius: 8px;
     margin-bottom: 20px;
     margin-left: 20px;
+    width: 300px;
 }
 
 #description {
@@ -81,7 +82,7 @@ body {
     margin-right: 8px;
 }
 
-.buy-now,  .add-cart {
+.add-cart {
     padding: 14px; /* tu peux garder un padding interne pour le texte */
     font-size: 16px;
     border-radius: 8px;
@@ -94,18 +95,7 @@ body {
     height: 45px;
 }
 
-/* Boutons */
-.buy-now {
-    background-color: mediumpurple;
-    color: white;
-    border: none;
 
-
-}
-
-.buy-now:hover {
-    background-color: #40a9ff;
-}
 
 .add-cart {
     background-color: #0e1216;

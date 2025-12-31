@@ -64,11 +64,10 @@
                 </c:forEach>
             </c:if>
         </select>
-        <span>${product.stock} en stock</span>
+        <span>${product.stock} <spring:message code="stockIndicator"/></span>
         </div>
 
         <div id="containerButton">
-            <button class="buy-now"><spring:message code="buyNowText"/></button>
             <button class="add-cart"><spring:message code="addCartButton"/></button>
         </div>
         <p><spring:message code="delivery"/></p>

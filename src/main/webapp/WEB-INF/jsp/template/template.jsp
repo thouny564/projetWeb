@@ -4,6 +4,8 @@
 
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ include file="../include/importTags.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 
 
@@ -56,13 +58,21 @@
                                 </ul>
 
                         </div>
-
-                     <c:if test="${not empty  pageContext.request.userPrincipal}">
+                    <c:choose>
+                     <c:when test="${not empty  pageContext.request.userPrincipal}">
                     <form method="post" action="<c:url value='/logout' />" >
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <button id="logout-form" type="submit"><spring:message code="deconnectText"/></button>
                     </form>
-                    </c:if>
+                    </c:when>
+
+                    <c:otherwise>
+                    <form action="${pageContext.request.contextPath}/register" method="get">
+                        <button id="MyAccount"><spring:message code="inscription"/></button>
+                    </form>
+                    </c:otherwise>
+
+                    </c:choose>
 
 
                 <a href="${pageContext.request.contextPath}/authenticated" title="<spring:message code="hrefTitleAccount"/>">
@@ -88,9 +98,7 @@
     <div class="footer-links">
         <a href=${pageContext.request.contextPath}/welcome><spring:message code='home'/></a>
         <a href="${pageContext.request.contextPath}/authenticated"><spring:message code="hrefTitleAccount"/></a>
-
-      <button id="MyAccount"href="${pageContext.request.contextPath}/authenticated"><spring:message code="inscription"/></button>
-      <a href="${pageContext.request.contextPath}/compagnyDescription"><spring:message code="shop"/></a>
+        <a href="${pageContext.request.contextPath}/compagnyDescription"><spring:message code="shop"/></a>
 
     </div>
 
