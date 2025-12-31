@@ -35,27 +35,46 @@
     <div id="productsContainer">
         <c:forEach var="product" items="${products}">
             <a  style="text-decoration: none" href="${pageContext.request.contextPath}/product/${product.id}">
-            <div  class="card">
-                    <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="${product.nameEn}" width=180 height=220>
+            <div class="card">
+
+                <!-- Lien vers la fiche produit -->
+                <a style="text-decoration: none"
+                   href="${pageContext.request.contextPath}/product/${product.id}">
+
+                    <img src="${pageContext.request.contextPath}/images/${product.imageUrl}"
+                         alt="${product.nameEn}" width="180" height="220">
+
                     <c:choose>
                         <c:when test="${lang=='fr'}">
-
                             <h2>${product.nameFr}</h2>
-                            <p><spring:message code="categoryText"/>: ${product.category.nameEn} (${product.category.nameFr})</p>
-
+                            <p>
+                                <spring:message code="categoryText"/> :
+                                ${product.category.nameEn} (${product.category.nameFr})
+                            </p>
                         </c:when>
-
                         <c:otherwise>
                             <h2>${product.nameEn}</h2>
-                            <p><spring:message code="categoryText"/>: ${product.category.nameEn} (${product.category.nameEn})</p>
-
+                            <p>
+                                <spring:message code="categoryText"/> :
+                                ${product.category.nameEn} (${product.category.nameEn})
+                            </p>
                         </c:otherwise>
-
-
                     </c:choose>
+
                     <p>${product.price} €</p>
-                    <button><spring:message code="addCartButton"/></button>
+                </a>
+
+                <!-- Bouton ajouter au panier -->
+                <form method="post"
+                      action="${pageContext.request.contextPath}/cart/add/${product.id}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <button type="submit">
+                        <spring:message code="addCartButton"/>
+                    </button>
+                </form>
+
             </div>
+
             </a>
         </c:forEach>
     </div>

@@ -30,7 +30,7 @@ public class CatalogController {
     @GetMapping
     public String catalog(Model model, Locale locale){
 
-        Category fps = new Category("Jeux de tirs", "FPS Games", "Jeux de tir a la premiere personne", "First-person shooter games");
+        /*Category fps = new Category("Jeux de tirs", "FPS Games", "Jeux de tir a la premiere personne", "First-person shooter games");
         Category rpg = new Category("Jeux de role", "RPG Games", "Jeux de role immersifs", "Immersive role-playing games");
         Category racing = new Category("Jeux de course", "Racing Games", "Jeux de course rapides", "Fast racing games");
 
@@ -48,13 +48,23 @@ public class CatalogController {
         Product p3 = new Product("Forza Horizon", "Forza Horizon", "Course automobile realiste", "Realistic car racing",
                 39.99, 10, "forza.png", true, racing);
 
+
         productDataAccess.add(p1);
         productDataAccess.add(p2);
         productDataAccess.add(p3);
 
+                */
+        ArrayList<Product> products = productDataAccess.getProducts();
+        List<Product> availableProducts = new ArrayList<>();
+        for (Product p : products) {
+            if (p.getStock() > 0) {
+                availableProducts.add(p);
+            }
+        }
+
+        model.addAttribute("products", availableProducts);
 
 
-        model.addAttribute("products", productDataAccess.getProducts());
         model.addAttribute("categories", categoryDataAccess.getCategories());
         model.addAttribute("lang", locale.getLanguage());
         return "integrated:catalog";

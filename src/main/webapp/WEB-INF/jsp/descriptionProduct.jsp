@@ -53,23 +53,26 @@
         </p>
         <p class="price">${product.price} €</p>
 
-        <div id="container-quantityStock">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <select id="quantitySelect" name="quantity" class="quantity-select">
-            <c:if test="${product.stock > 0}">
-                <c:forEach begin="1" end="${product.stock}" var="i">
-                    <option value="${i}"<c:if test="${i == 1}">selected</c:if>>
-                            ${i}
-                    </option>
-                </c:forEach>
-            </c:if>
-        </select>
-        <span>${product.stock} <spring:message code="stockIndicator"/></span>
-        </div>
+        <form method="post" action="${pageContext.request.contextPath}/cart/addCustomQuantity/${product.id}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-        <div id="containerButton">
-            <button class="add-cart"><spring:message code="addCartButton"/></button>
-        </div>
+            <div id="container-quantityStock">
+                <select name="quantity" class="quantity-select">
+                    <c:forEach begin="1" end="${product.stock}" var="i">
+                        <option value="${i}" ${i == 1 ? "selected" : ""}>${i}</option>
+                    </c:forEach>
+                </select>
+                <span>${product.stock} en stock</span>
+            </div>
+
+            <div id="containerButton">
+                <button type="submit" class="add-cart">
+                    <spring:message code="addCartButton"/>
+                </button>
+            </div>
+        </form>
+
+
         <p><spring:message code="delivery"/></p>
 
     </div>
