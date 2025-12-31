@@ -1,13 +1,17 @@
 
 #container-parent{
-
+    margin-top: 60px;
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .signup-form {
     background-color: white;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 400px;
+    width: 500px;
 }
 
 .signup-form h2 {
@@ -34,7 +38,7 @@
 }
 
 .form-group button {
-    width: 100%;
+    width: 50%;
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -42,6 +46,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+#container-buttonSubmit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .form-group button:hover {

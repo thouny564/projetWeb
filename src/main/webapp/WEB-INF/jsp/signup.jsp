@@ -79,7 +79,7 @@
 
 
 
-        <div class="form-group">
+        <div id="container-buttonSubmit" class="form-group" >
             <form:button type="submit"><spring:message code="submitBoutton"/></form:button>
 
         </div>
