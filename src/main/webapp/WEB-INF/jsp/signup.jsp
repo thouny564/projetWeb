@@ -3,22 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ include file="include/importTags.jsp" %>
 
-
-
-<html>
-<head>
-    <title>${title}</title>
-    <link type="text/css" href="<spring:url value='/css/signup.css' />" rel="stylesheet">
-    <style>
-        .error {
-            color: red;
-            font-size: 0.9em;
-            margin-left: 10px;
-        }
-    </style>
-</head>
-<body>
-
+<div id="container-parent">
 <div class="signup-form">
     <h2>Signup Form</h2>
 
@@ -101,6 +86,5 @@
     </form:form>
 
 </div>
+</div>
 
-</body>
-</html>

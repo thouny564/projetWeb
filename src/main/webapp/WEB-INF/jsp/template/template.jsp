@@ -19,6 +19,7 @@
     <link type="text/css" href="<spring:url value='/css/product.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/compagnyDescription.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/authenticated.css' />" rel="stylesheet">
+    <link type="text/css" href="<spring:url value='/css/signup.css' />" rel="stylesheet">
 
     <spring:url var="localeFr" value="">
         <spring:param name="locale" value="fr"/>
@@ -43,7 +44,7 @@
                 <div id="optionSite">
                         <c:choose>
                         <c:when test="${not empty  pageContext.request.userPrincipal}">
-                         <p><spring:message code="welcomeUser"/> ${pageContext.request.userPrincipal.name} !</p>
+                         <p id="personalized-message"><spring:message code="welcomeUser"/> ${pageContext.request.userPrincipal.name} !</p>
                         </c:when>
 
                         </c:choose>

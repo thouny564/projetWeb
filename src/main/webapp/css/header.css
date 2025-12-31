@@ -34,6 +34,8 @@ body {
   margin-right: 20px;
 }
 
+
+
 .nav-links{
   list-style: none;
   display: flex;
@@ -53,7 +55,11 @@ body {
   color: #6dc7e3; /* Changement de couleur au survol (le rouge de votre bouton) */
 }
 
-.dropdown button, #logout-form {
+#personalized-message{
+  margin-right: 20px;
+}
+
+.dropdown button, #logout-form, #MyAccount {
   color: white;
   border-radius: 5px;
   border: none;
@@ -67,8 +73,13 @@ body {
   padding: 5px 5px;
 }
 
-.dropdown button{
+
+.dropdown button,  #MyAccount {
   background-color: #e63946;
+}
+
+#myAccount {
+  margin-top: 15px;
 }
 
 #logout-form {
@@ -156,20 +167,3 @@ footer {
 }
 
 
-#MyAccount {
-  color: white;
-  border-radius: 10px;
-  background-color: #e63946;
-  border: none;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  outline: none;
-  appearance: none; /* Enlève la flèche par défaut du navigateur */
-  -webkit-appearance: none;
-  padding: 5px 5px;
-  width: 100px;
-
-
-}
