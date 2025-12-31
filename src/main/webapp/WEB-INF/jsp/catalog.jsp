@@ -4,43 +4,50 @@
 
 <div class="container">
 
-    <div id ="search_filters">
-        <p style="margin-left: 10px; "><spring:message code="filterTextContainer"/></p>
+    <!-- Filtre par catégorie -->
+    <div id="search_filters">
+        <p style="margin-left: 10px;"><spring:message code="filterTextContainer"/></p>
         <section>
-            <p style="margin-left: 25px; "><spring:message code="categories"/><span style="font-size: 10px"><sup>*<spring:message code="warningMessageFilter"/></sup></span></p>
-            <ul id="checkboxChoices" style="list-style: none;">
-                <c:forEach var="category" items="${categories}">
-                    <li style="margin-bottom: 8px">
-                        <input class="single-select" type="checkbox" id="${category.id}" value="${category.id}">
-                        <c:choose>
-                            <c:when test="${lang =='fr'}">
-                                <label for="${category.id}">${category.nameFr}</label>
-                            </c:when>
-                            <c:otherwise>
-                                <label for="${category.id}">${category.nameEn}</label>
+            <p style="margin-left: 25px;">
+                <spring:message code="categories"/>
+                <span style="font-size: 10px">
+                    <sup>*<spring:message code="warningMessageFilter"/></sup>
+                </span>
+            </p>
 
-                            </c:otherwise>
-                        </c:choose>
-                    </li>
-                </c:forEach>
-            </ul>
+            <form method="post" action="${pageContext.request.contextPath}/product/category">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <ul id="categoryChoices" style="list-style: none;">
+                    <c:forEach var="category" items="${categories}">
+                        <li style="margin-bottom: 8px">
+                            <input type="radio" name="categoryId" value="${category.id}" id="cat${category.id}"
+                                <c:if test="${category.id == selectedCategoryId}">checked</c:if> >
 
-
-            <script src="<spring:url value='/js/checkbox.js' />"></script>
-
+                            <c:choose>
+                                <c:when test="${lang =='fr'}">
+                                    <label for="cat${category.id}">${category.nameFr}</label>
+                                </c:when>
+                                <c:otherwise>
+                                    <label for="cat${category.id}">${category.nameEn}</label>
+                                </c:otherwise>
+                            </c:choose>
+                        </li>
+                    </c:forEach>
+                </ul>
+                <button type="submit">Filtrer</button>
+            </form>
 
         </section>
-
     </div>
+
+    <!-- Liste des produits -->
     <div id="productsContainer">
         <c:forEach var="product" items="${products}">
-
             <div class="card">
 
                 <!-- Lien vers la fiche produit -->
                 <a style="text-decoration: none"
                    href="${pageContext.request.contextPath}/product/${product.id}">
-
                     <img src="${pageContext.request.contextPath}/images/${product.imageUrl}"
                          alt="${product.nameEn}" width="180" height="220">
 
@@ -65,8 +72,7 @@
                 </a>
 
                 <!-- Bouton ajouter au panier -->
-                <form method="post"
-                      action="${pageContext.request.contextPath}/cart/add/${product.id}">
+                <form method="post" action="${pageContext.request.contextPath}/cart/add/${product.id}">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <button type="submit">
                         <spring:message code="addCartButton"/>
@@ -74,8 +80,6 @@
                 </form>
 
             </div>
-
-            </a>
         </c:forEach>
     </div>
 </div>
