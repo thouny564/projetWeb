@@ -26,9 +26,16 @@ public class CustomerOrderDAO implements CustomerOrderDataAccess {
     }
 
     @Override
-    public void add(CustomerOrder order) {
-        customerOrderRepository.save(converter.customerOrderModelToEntity(order));
+    public Integer add(CustomerOrder order) {
+
+        CustomerOrderEntity entity = converter.customerOrderModelToEntity(order);
+
+        CustomerOrderEntity savedEntity = customerOrderRepository.save(entity);
+
+
+        return savedEntity.getId();
     }
+
 
     @Override
     public void delete(Integer id) {

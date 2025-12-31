@@ -23,7 +23,7 @@ public class SecurityConfiguration {
 
     private static final String LOGIN_PAGE = "/login";
 
-    private static final String[] USER_PAGE = new String[] {"/authenticated", "/user/**", "/order", "/order/**"};
+    private static final String[] USER_PAGE = new String[] {"/authenticated", "/user/**", "/order", "/order/**", "/pay", "/pay/**"};
 
 
     private static final String[] PUBLIC_ROUTES = new String[]{

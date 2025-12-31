@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface CustomerOrderDataAccess {
 
-    void add(CustomerOrder order);
+    Integer add(CustomerOrder order);
 
     void delete(Integer id);
 

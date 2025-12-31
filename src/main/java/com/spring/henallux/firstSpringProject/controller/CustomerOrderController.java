@@ -35,27 +35,21 @@ public class CustomerOrderController {
 
 
     @PostMapping
-    public String CreateCustomerOrder(
+    public String createCustomerOrder(
             @AuthenticationPrincipal User currentUser,
-            Model model,
             HttpSession session) {
-
-
-        CustomerOrder customerOrder = new CustomerOrder();
 
         Cart cart = (Cart) session.getAttribute(Constants.CART);
         if (cart == null || cart.getItems().isEmpty()) {
-            model.addAttribute("errorMessage", "Le panier est vide.");
-            return "integrated:cart";
+            return "redirect:/cart?error=panier_vide";
         }
 
 
+        CustomerOrder customerOrder = new CustomerOrder();
         double totalPrice = 0.0;
         for (Map.Entry<Integer, Integer> entry : cart.getItems().entrySet()) {
             Product p = productDataAccess.get(entry.getKey());
-            if (p != null) {
-                totalPrice += p.getPrice() * entry.getValue();
-            }
+            if (p != null) totalPrice += p.getPrice() * entry.getValue();
         }
 
         customerOrder.setUser(currentUser);
@@ -64,10 +58,7 @@ public class CustomerOrderController {
         customerOrder.setTotalPrice(totalPrice);
         customerOrder.setPaid(false);
 
-
-        customerOrderDataAccess.add(customerOrder);
-
-
+        Integer orderId = customerOrderDataAccess.add(customerOrder);
 
         for (Map.Entry<Integer, Integer> entry : cart.getItems().entrySet()) {
             Product p = productDataAccess.get(entry.getKey());
@@ -78,14 +69,13 @@ public class CustomerOrderController {
         }
 
 
-
-
         cart.getItems().clear();
         session.setAttribute(Constants.CART, cart);
 
-        model.addAttribute("successMessage", "Commande passée avec succès !");
-        return "redirect:/cart";
+
+        return "redirect:/pay/" + orderId;
     }
+
 
 
 }
