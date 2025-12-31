@@ -1,39 +1,77 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <div class="product-container">
 
 
     <div class="product-left">
         <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="Nom du produit" >
         <p id="description">
-            Voici la description du produit.
-            Ce jeu propose une expérience immersive avec des graphismes exceptionnels,
-            une histoire captivante et un gameplay intense.
+
+            <c:choose>
+                <c:when test="${lang== 'fr'}">
+                    ${product.descriptionFr}
+                </c:when>
+
+                <c:otherwise>
+                    ${product.descriptionEn}
+                </c:otherwise>
+
+            </c:choose>
+
         </p>
     </div>
 
     <div class="product-right">
-        <h2>FF7 Rebirth ps5</h2>
-        <p style="border-top: 2px solid#eee; padding-top: 10px;">Catégories : aventure, combat</p>
-        <p class="price">59,99 €</p>
+        <h2>
+            <c:choose>
+                <c:when test="${lang== 'fr'}">
+                    ${product.nameFr}
+                </c:when>
 
+                <c:otherwise>
+                    ${product.nameEn}
+                </c:otherwise>
+
+            </c:choose>
+
+        </h2>
+        <p style="border-top: 2px solid#eee; padding-top: 10px;"><spring:message code="categories"/>:
+
+            <c:choose>
+                <c:when test="${lang== 'fr'}">
+                    ${product.category.nameFr}
+                </c:when>
+
+                <c:otherwise>
+                    ${product.category.nameEn}
+                </c:otherwise>
+
+            </c:choose>
+
+        </p>
+        <p class="price">${product.price} €</p>
+
+        <div id="container-quantityStock">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <select name="quantity" class="quantity-select">
+        <select id="quantitySelect" name="quantity" class="quantity-select">
             <c:if test="${product.stock > 0}">
                 <c:forEach begin="1" end="${product.stock}" var="i">
-                    <option value="${i}" ${i == 1 ? 'selected' : ''}>
+                    <option value="${i}"<c:if test="${i == 1}">selected</c:if>>
                             ${i}
                     </option>
                 </c:forEach>
             </c:if>
         </select>
+        <span>${product.stock} en stock</span>
+        </div>
 
         <div id="containerButton">
-            <button class="buy-now">Acheter maintenant</button>
-            <button class="add-cart">Ajouter au panier</button>
+            <button class="buy-now"><spring:message code="buyNowText"/></button>
+            <button class="add-cart"><spring:message code="addCartButton"/></button>
         </div>
-        <p>Livraison
-            - Offerte à partir de 39€
-            - Livraison dans toute l'Europe
-            - Traitement en 24h ouvrables</p>
+        <p><spring:message code="delivery"/></p>
 
     </div>
 
