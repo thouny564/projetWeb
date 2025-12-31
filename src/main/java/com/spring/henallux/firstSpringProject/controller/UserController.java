@@ -7,7 +7,10 @@ import com.spring.henallux.firstSpringProject.model.UserUpdateForm;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/user")
@@ -37,6 +41,21 @@ public class UserController {
             BindingResult errors,
             Model model) {
 
+
+        if (userForm.getBirthdate() == null) {
+            errors.rejectValue("birthdate", "birthdate.invalid", "Date de naissance requise");
+        } else {
+            LocalDate today = LocalDate.now();
+            LocalDate minBirthdate = today.minusYears(13);
+            LocalDate maxBirthdate = today.minusYears(120);
+            if (userForm.getBirthdate().isAfter(minBirthdate)) {
+                errors.rejectValue("birthdate", "birthdate.tooYoung", "Vous devez avoir au moins 13 ans");
+            } else if (userForm.getBirthdate().isBefore(maxBirthdate)) {
+                errors.rejectValue("birthdate", "birthdate.tooOld", "Date de naissance trop ancienne");
+            }
+        }
+
+
         User user = userDataAccess.getByUsername(currentUser.getUsername());
 
         PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
@@ -50,6 +69,8 @@ public class UserController {
             errors.rejectValue("mailAddress", "mailAddress.invalid", "Adresse email invalide");
         }
 
+
+
         if (errors.hasErrors()) {
             return "integrated:authenticated";
         }
@@ -60,6 +81,7 @@ public class UserController {
             return "integrated:authenticated";
         }
 
+
         user.setFirstName(userForm.getFirstName());
         user.setFamilyName(userForm.getFamilyName());
         user.setStreet(userForm.getStreet());
@@ -68,14 +90,23 @@ public class UserController {
         user.setCity(userForm.getCity());
         user.setPhoneNumber(userForm.getPhoneNumber());
         user.setMailAddress(userForm.getMailAddress());
+        user.setBirthdate(userForm.getBirthdate());
 
         userDataAccess.update(user);
 
+        User updatedUser = userDataAccess.getByUsername(currentUser.getUsername());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                updatedUser,
+                currentUser.getPassword(),
+                currentUser.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         model.addAttribute("successMessage", "Profil mis à jour avec succès !");
 
         return "integrated:authenticated";
     }
+
 
 
     private void sanitizeField(String fieldValue, String fieldName, BindingResult errors, PolicyFactory policy, String message) {

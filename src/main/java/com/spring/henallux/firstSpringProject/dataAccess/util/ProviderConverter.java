@@ -15,13 +15,19 @@ public class ProviderConverter {
 
     public UserEntity userModelToUserEntity(User user) {
         if (user == null) return null;
-        return mapper.map(user, UserEntity.class);
+        UserEntity entity = mapper.map(user, UserEntity.class);
+        entity.setBirthdate(user.getBirthdate());
+        return entity;
     }
+
 
     public User userEntityToUserModel(UserEntity userEntity) {
         if (userEntity == null) return null;
-        return mapper.map(userEntity, User.class);
+        User user = mapper.map(userEntity, User.class);
+        user.setBirthdate(userEntity.getBirthdate());
+        return user;
     }
+
 
 
 

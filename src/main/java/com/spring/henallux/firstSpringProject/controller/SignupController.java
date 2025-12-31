@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,21 @@ public class SignupController {
                                 @Valid @ModelAttribute(value = Constants.CURRENT_USER) User userForm,
                                 final BindingResult errors) {
 
+
+        LocalDate today = LocalDate.now();
+        LocalDate minBirthdate = today.minusYears(13);
+        LocalDate maxBirthdate = today.minusYears(120);
+
+        if (userForm.getBirthdate() != null) {
+            if (userForm.getBirthdate().isAfter(minBirthdate)) {
+                errors.rejectValue("birthdate", "birthdate.tooYoung", "Vous devez avoir au moins 13 ans pour vous inscrire");
+            } else if (userForm.getBirthdate().isBefore(maxBirthdate)) {
+                errors.rejectValue("birthdate", "birthdate.tooOld", "Date de naissance trop ancienne");
+            }
+        }
+
+
+
         PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
         sanitizeField(userForm.getUsername(), "username", errors, policy, "Nom d'utilisateur invalide");
@@ -78,6 +94,8 @@ public class SignupController {
         sanitizeField(userForm.getStreet(), "street", errors, policy, "Rue invalide");
         sanitizeField(userForm.getCity(), "city", errors, policy, "Ville invalide");
         sanitizeField(userForm.getPhoneNumber(), "phoneNumber", errors, policy, "Numéro de téléphone invalide");
+
+
 
         if (errors.hasErrors()) {
             return "integrated:signup";
@@ -110,7 +128,8 @@ public class SignupController {
                 userForm.getCity(),
                 true,
                 userForm.getPhoneNumber(),
-                userForm.getMailAddress()
+                userForm.getMailAddress(),
+                userForm.getBirthdate()
         );
 
 
