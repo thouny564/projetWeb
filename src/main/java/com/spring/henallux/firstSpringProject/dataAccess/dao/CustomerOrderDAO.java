@@ -1,6 +1,7 @@
 package com.spring.henallux.firstSpringProject.dataAccess.dao;
 
 import com.spring.henallux.firstSpringProject.dataAccess.entity.CustomerOrderEntity;
+import com.spring.henallux.firstSpringProject.dataAccess.entity.UserEntity;
 import com.spring.henallux.firstSpringProject.dataAccess.repository.CustomerOrderRepository;
 import com.spring.henallux.firstSpringProject.dataAccess.util.ProviderConverter;
 import com.spring.henallux.firstSpringProject.model.CustomerOrder;
@@ -51,8 +52,20 @@ public class CustomerOrderDAO implements CustomerOrderDataAccess {
 
     @Override
     public void update(CustomerOrder order) {
-        customerOrderRepository.save(converter.customerOrderModelToEntity(order));
+
+        CustomerOrderEntity entity = customerOrderRepository.findById(order.getId()).orElse(null);
+        if (entity == null) return;
+
+
+        entity.setStatus(order.getStatus());
+        entity.setPaid(order.getPaid());
+        entity.setTotalPrice(order.getTotalPrice());
+        entity.setOrderDate(order.getOrderDate());
+
+
+        customerOrderRepository.save(entity);
     }
+
 
     @Override
     public ArrayList<CustomerOrder> getAllOrders() {

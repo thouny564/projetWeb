@@ -56,6 +56,17 @@ public class OrderLineDAO implements OrderLineDataAccess {
         return lines;
     }
 
+    @Override
+    public List<OrderLine> getOrderLinesByOrderId(Integer orderId) {
+        List<OrderLineEntity> entities = orderLineRepository.findByOrderId(orderId);
+        List<OrderLine> lines = new ArrayList<>();
+        for (OrderLineEntity e : entities) {
+            lines.add(converter.orderLineEntityToModel(e));
+        }
+        return lines;
+    }
+
+
 
 
 }

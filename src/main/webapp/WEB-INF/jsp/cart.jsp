@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
 <h1>Mon Panier</h1>
 
 <!-- Message de confirmation commande -->
@@ -26,9 +26,12 @@
 
     <tbody>
         <c:forEach var="product" items="${products}">
+            <c:set var="promoPrice" value="${promoPrices[product.id]}" />
+
             <tr class="cart-row" id="product-${product.id}">
                 <td class="cart-image">
-                    <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="${product.nameEn}" width="100"/>
+                    <img src="${pageContext.request.contextPath}/images/${product.imageUrl}"
+                         alt="${product.nameEn}" width="100"/>
                 </td>
                 <td class="cart-product">
                     <strong>${product.nameEn} (${product.nameFr})</strong><br/>
@@ -36,7 +39,17 @@
                     ${product.descriptionFr}<br/>
                     Catégorie : ${product.category.nameEn} (${product.category.nameFr})
                 </td>
-                <td class="cart-price">${product.price} €</td>
+                <td class="cart-price">
+                    <c:choose>
+                        <c:when test="${promoPrice < product.price}">
+                            <span style="text-decoration: line-through; color:#999;">${product.price} €</span>
+                            <span style="color:red; font-weight:bold; margin-left:8px;">${promoPrice} €</span>
+                        </c:when>
+                        <c:otherwise>
+                            ${product.price} €
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td class="cart-stock">${product.stock}</td>
                 <td class="cart-quantity">
                     <form class="update-form" action="${pageContext.request.contextPath}/cart/update/${product.id}" method="post">
@@ -65,7 +78,9 @@
                         <button type="submit" class="delete-btn">Supprimer</button>
                     </form>
                 </td>
-                <td class="cart-total">${product.price * quantities[product.id]} €</td>
+                <td class="cart-total">
+                    ${promoPrice * quantities[product.id]} €
+                </td>
             </tr>
         </c:forEach>
     </tbody>
@@ -80,7 +95,7 @@
     </tfoot>
 </table>
 
-<!-- Bouton Passer commande -->
+
 <form id="order-btn-form" action="${pageContext.request.contextPath}/order" method="post" onsubmit="return confirm('Confirmer la commande ?');">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <button type="submit" id="order-btn">Passer commande</button>
@@ -91,19 +106,3 @@
         <c:out value="${errorMessage}" />
     </div>
 </c:if>
-
-
-
-
-
-<!-- Ajouter le produit ID 1 au panier -->
-<form action="${pageContext.request.contextPath}/cart/add/1" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    <button type="submit">Ajouter produit ID 1 au panier</button>
-</form>
-
-<!-- Retirer le produit ID 1 du panier -->
-<form action="${pageContext.request.contextPath}/cart/remove/1" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    <button type="submit">Retirer produit ID 1 du panier</button>
-</form>

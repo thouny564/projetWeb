@@ -80,8 +80,6 @@ public class UserDAO implements UserDataAccess {
         existingUser.setPhoneNumber(user.getPhoneNumber());
         existingUser.setMailAddress(user.getMailAddress());
         existingUser.setBirthdate(user.getBirthdate());
-        System.out.println(user.getBirthdate());
-        System.out.println(existingUser.getBirthdate());
         userRepository.save(existingUser);
     }
 

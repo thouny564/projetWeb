@@ -68,7 +68,25 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <p>${product.price} €</p>
+                    <p>
+                        <c:choose>
+
+                            <c:when test="${promoPrices[product.id] < product.price}">
+                                <span style="text-decoration: line-through; color: gray;">
+                                    ${product.price} €
+                                </span>
+                                <span style="color: red; font-weight: bold; margin-left: 5px;">
+                                    ${promoPrices[product.id]} €
+                                </span>
+                            </c:when>
+
+
+                            <c:otherwise>
+                                ${product.price} €
+                            </c:otherwise>
+                        </c:choose>
+                    </p>
+
                 </a>
 
                 <!-- Bouton ajouter au panier -->

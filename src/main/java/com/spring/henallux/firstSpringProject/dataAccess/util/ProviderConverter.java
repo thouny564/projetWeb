@@ -94,7 +94,7 @@ public class ProviderConverter {
         if (entity == null) return null;
 
         CustomerOrder model = mapper.map(entity, CustomerOrder.class);
-        model.setUser(userEntityToUserModel(entity.getUser()));
+
 
         return model;
     }
@@ -120,6 +120,28 @@ public class ProviderConverter {
         return model;
     }
 
+
+
+
+    public PromotionEntity promotionModelToEntity(Promotion model) {
+        if (model == null) return null;
+
+        PromotionEntity entity = mapper.map(model, PromotionEntity.class);
+        if (model.getProduct() != null) {
+            entity.setProduct(productModelToProductEntity(model.getProduct()));
+        }
+        return entity;
+    }
+
+    public Promotion promotionEntityToModel(PromotionEntity entity) {
+        if (entity == null) return null;
+
+        Promotion model = mapper.map(entity, Promotion.class);
+        if (entity.getProduct() != null) {
+            model.setProduct(productEntityToProductModel(entity.getProduct()));
+        }
+        return model;
+    }
 
 
 

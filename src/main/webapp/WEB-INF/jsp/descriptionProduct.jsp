@@ -4,77 +4,86 @@
 
 <div class="product-container">
 
-
     <div class="product-left">
-        <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="Nom du produit" >
-        <p id="description">
+        <img src="${pageContext.request.contextPath}/images/${product.imageUrl}"
+             alt="${product.nameEn}">
 
+        <p id="description">
             <c:choose>
-                <c:when test="${lang== 'fr'}">
+                <c:when test="${lang == 'fr'}">
                     ${product.descriptionFr}
                 </c:when>
-
                 <c:otherwise>
                     ${product.descriptionEn}
                 </c:otherwise>
-
             </c:choose>
-
         </p>
     </div>
 
     <div class="product-right">
         <h2>
             <c:choose>
-                <c:when test="${lang== 'fr'}">
+                <c:when test="${lang == 'fr'}">
                     ${product.nameFr}
                 </c:when>
-
                 <c:otherwise>
                     ${product.nameEn}
                 </c:otherwise>
-
             </c:choose>
-
         </h2>
-        <p style="border-top: 2px solid#eee; padding-top: 10px;"><spring:message code="categories"/>:
 
+        <p style="border-top: 2px solid #eee; padding-top: 10px;">
+            <spring:message code="categories"/> :
             <c:choose>
-                <c:when test="${lang== 'fr'}">
+                <c:when test="${lang == 'fr'}">
                     ${product.category.nameFr}
                 </c:when>
-
                 <c:otherwise>
                     ${product.category.nameEn}
                 </c:otherwise>
-
             </c:choose>
-
         </p>
-        <p class="price">${product.price} €</p>
 
-        <form method="post" action="${pageContext.request.contextPath}/cart/addCustomQuantity/${product.id}">
+        <!-- PRIX -->
+        <c:choose>
+            <c:when test="${promoPrice < product.price}">
+                <p class="price">
+                    <span style="text-decoration: line-through; color: #999;">
+                        ${product.price} €
+                    </span>
+                    <span style="color: red; font-weight: bold; margin-left: 8px;">
+                        ${promoPrice} €
+                    </span>
+                </p>
+            </c:when>
+
+            <c:otherwise>
+                <p class="price">
+                    ${product.price} €
+                </p>
+            </c:otherwise>
+        </c:choose>
+
+        <!-- AJOUT PANIER -->
+        <form method="post"
+              action="${pageContext.request.contextPath}/cart/addCustomQuantity/${product.id}">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
             <div id="container-quantityStock">
                 <select name="quantity" class="quantity-select">
                     <c:forEach begin="1" end="${product.stock}" var="i">
-                        <option value="${i}" ${i == 1 ? "selected" : ""}>${i}</option>
+                        <option value="${i}">${i}</option>
                     </c:forEach>
                 </select>
                 <span>${product.stock} en stock</span>
             </div>
 
-            <div id="containerButton">
-                <button type="submit" class="add-cart">
-                    <spring:message code="addCartButton"/>
-                </button>
-            </div>
+            <button type="submit" class="add-cart">
+                <spring:message code="addCartButton"/>
+            </button>
         </form>
 
-
         <p><spring:message code="delivery"/></p>
-
     </div>
 
 </div>
