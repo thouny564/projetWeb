@@ -1,9 +1,13 @@
 package com.spring.henallux.firstSpringProject.dataAccess.entity;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -52,6 +56,10 @@ public class UserEntity implements Serializable {
     @Column(name = "mail_address", nullable = false, length = 254, unique = true)
     private String mailAddress;
 
+    @Column(name="birthdate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthdate;
+
 
 
     public UserEntity() {}
@@ -71,6 +79,18 @@ public class UserEntity implements Serializable {
         this.phoneNumber = phoneNumber;
         this.mailAddress = mailAddress;
     }
+
+
+    public UserEntity(String username, String password, String firstName, String familyName, String street,
+                      Integer streetNumber, Integer postalCode, String city, Boolean enabled,
+                      String phoneNumber, String mailAddress, LocalDate birthdate) {
+
+        this(username, password, firstName, familyName, street,
+                streetNumber, postalCode, city, enabled, phoneNumber, mailAddress);
+
+        this.birthdate = birthdate;
+    }
+
 
 
     public String getPhoneNumber() {
@@ -144,6 +164,17 @@ public class UserEntity implements Serializable {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+
+
 
 
     @Override

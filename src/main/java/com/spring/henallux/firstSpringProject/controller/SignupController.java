@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,12 +83,6 @@ public class SignupController {
         return "redirect:/welcome";
     }
 
-
-    private void sanitizeField(String fieldValue, String fieldName, BindingResult errors, PolicyFactory policy, String message) {
-        if (!policy.sanitize(fieldValue).equals(fieldValue)) {
-            errors.rejectValue(fieldName, fieldName + ".invalid", message);
-        }
-    }
 
 
 

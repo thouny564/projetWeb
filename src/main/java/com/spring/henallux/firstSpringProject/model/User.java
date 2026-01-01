@@ -3,12 +3,18 @@ package com.spring.henallux.firstSpringProject.model;
 import javax.validation.constraints.*;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import java.time.LocalDate;
+
+
+
 
 public class User implements UserDetails {
 
@@ -49,7 +55,6 @@ public class User implements UserDetails {
     private String city;
 
 
-    @NotNull
     private boolean enabled;
 
 
@@ -61,6 +66,9 @@ public class User implements UserDetails {
     @Size(max = 254)
     @Email
     private String mailAddress;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthdate;
 
 
     private List<Authority> authorities;
@@ -83,6 +91,17 @@ public class User implements UserDetails {
         this.mailAddress = mailAddress;
         this.authorities = new ArrayList<>();
     }
+
+    public User(String username, String password, String firstName, String familyName, String street,
+                Integer streetNumber, Integer postalCode, String city, boolean enabled,
+                String phoneNumber, String mailAddress, LocalDate birthdate) {
+
+        this(username, password, firstName, familyName, street,
+                streetNumber, postalCode, city, enabled, phoneNumber, mailAddress);
+
+        this.birthdate = birthdate;
+    }
+
 
 
 
@@ -152,6 +171,15 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() { return true; }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
 
     @Override
     public String toString() {

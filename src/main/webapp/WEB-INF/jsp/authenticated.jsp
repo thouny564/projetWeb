@@ -49,6 +49,17 @@
             </td>
         </tr>
 
+
+
+        <tr>
+    <td><spring:message code="birthdate"/></td>
+    <td>
+        <form:input path="birthdate" type="date" cssClass="profile-input"/>
+        <form:errors path="birthdate" cssClass="error"/>
+    </td>
+</tr>
+
+
         <tr>
             <td><spring:message code="phoneNumber"/></td>
             <td>

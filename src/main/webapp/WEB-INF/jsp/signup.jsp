@@ -68,6 +68,14 @@
             <form:errors path="familyName" cssClass="error" />
         </div>
 
+
+        <div class="form-group">
+            <form:label path="birthdate"><spring:message code="birthdate"/>:</form:label>
+            <form:input path="birthdate" type="date" />
+            <form:errors path="birthdate" cssClass="error" />
+        </div>
+
+
         <div class="form-group">
             <form:label path="street"><spring:message code="street"/>:</form:label>
             <form:input path="street" />

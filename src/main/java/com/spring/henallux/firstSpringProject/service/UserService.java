@@ -6,9 +6,14 @@ import com.spring.henallux.firstSpringProject.model.User;
 import com.spring.henallux.firstSpringProject.model.UserUpdateForm;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+
+import java.time.LocalDate;
 
 @Service
 public class UserService {
@@ -23,6 +28,21 @@ public class UserService {
     }
 
     public void register(User userForm, BindingResult errors) {
+
+
+
+        LocalDate today = LocalDate.now();
+        LocalDate minBirthdate = today.minusYears(13);
+        LocalDate maxBirthdate = today.minusYears(120);
+
+        if (userForm.getBirthdate() != null) {
+            if (userForm.getBirthdate().isAfter(minBirthdate)) {
+                errors.rejectValue("birthdate", "birthdate.tooYoung", "Vous devez avoir au moins 13 ans pour vous inscrire");
+            } else if (userForm.getBirthdate().isBefore(maxBirthdate)) {
+                errors.rejectValue("birthdate", "birthdate.tooOld", "Date de naissance trop ancienne");
+            }
+        }
+
 
         PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
@@ -58,7 +78,8 @@ public class UserService {
                 userForm.getCity(),
                 true,
                 userForm.getPhoneNumber(),
-                userForm.getMailAddress()
+                userForm.getMailAddress(),
+                userForm.getBirthdate()
         );
 
         Authority roleUser = new Authority("ROLE_USER", user);
@@ -69,6 +90,24 @@ public class UserService {
 
 
     public void update(User currentUser, UserUpdateForm userForm, BindingResult errors) {
+
+
+
+        if (userForm.getBirthdate() == null) {
+            errors.rejectValue("birthdate", "birthdate.invalid", "Date de naissance requise");
+        } else {
+            LocalDate today = LocalDate.now();
+            LocalDate minBirthdate = today.minusYears(13);
+            LocalDate maxBirthdate = today.minusYears(120);
+            if (userForm.getBirthdate().isAfter(minBirthdate)) {
+                errors.rejectValue("birthdate", "birthdate.tooYoung", "Vous devez avoir au moins 13 ans");
+            } else if (userForm.getBirthdate().isBefore(maxBirthdate)) {
+                errors.rejectValue("birthdate", "birthdate.tooOld", "Date de naissance trop ancienne");
+            }
+        }
+
+
+
         PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
 
         sanitize(userForm.getFirstName(), "firstName", errors, policy, "Prénom invalide");
@@ -98,8 +137,18 @@ public class UserService {
         currentUser.setCity(userForm.getCity());
         currentUser.setPhoneNumber(userForm.getPhoneNumber());
         currentUser.setMailAddress(userForm.getMailAddress());
+        currentUser.setBirthdate(userForm.getBirthdate());
 
         userDataAccess.update(currentUser);
+
+        User updatedUser = userDataAccess.getByUsername(currentUser.getUsername());
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                updatedUser,
+                currentUser.getPassword(),
+                currentUser.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private void sanitize(String value, String field, BindingResult errors,

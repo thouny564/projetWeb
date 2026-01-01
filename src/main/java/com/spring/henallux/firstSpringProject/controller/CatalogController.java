@@ -52,7 +52,7 @@ public class CatalogController {
         productDataAccess.add(p1);
         productDataAccess.add(p2);
         productDataAccess.add(p3);
-quand tu ajoute un product tu mets le nom de la photo
+
                 */
         ArrayList<Product> products = productDataAccess.getProducts();
         List<Product> availableProducts = new ArrayList<>();
