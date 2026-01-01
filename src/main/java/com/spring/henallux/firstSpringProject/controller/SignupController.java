@@ -2,6 +2,7 @@ package com.spring.henallux.firstSpringProject.controller;
 
 import com.spring.henallux.firstSpringProject.dataAccess.dao.*;
 import com.spring.henallux.firstSpringProject.model.*;
+import com.spring.henallux.firstSpringProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +34,7 @@ public class SignupController {
     private final ProductDataAccess productDataAccess;
     private final CustomerOrderDataAccess customerOrderDataAccess;
     private final OrderLineDataAccess orderLineDataAccess;
+    private final UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,7 +47,8 @@ public class SignupController {
     }
 
     @Autowired
-    public SignupController(UserDataAccess userDataAccess, AuthorityDataAccess authorityDataAccess, CategoryDataAccess categoryDataAccess, ProductDataAccess productDataAccess, CustomerOrderDataAccess customerOrderDataAccess, OrderLineDataAccess orderLineDataAccess) {
+    public SignupController(UserService userService, UserDataAccess userDataAccess, AuthorityDataAccess authorityDataAccess, CategoryDataAccess categoryDataAccess, ProductDataAccess productDataAccess, CustomerOrderDataAccess customerOrderDataAccess, OrderLineDataAccess orderLineDataAccess) {
+        this.userService = userService;
         this.userDataAccess = userDataAccess;
         this.authorityDataAccess = authorityDataAccess;
         this.categoryDataAccess = categoryDataAccess;
@@ -65,63 +68,20 @@ public class SignupController {
 
 
 
-    @RequestMapping(value = "/submitSignup", method = RequestMethod.POST)
-    public String getSignUpData(Model model,
-                                @Valid @ModelAttribute(value = Constants.CURRENT_USER) User userForm,
-                                final BindingResult errors) {
+    @PostMapping("/submitSignup")
+    public String submitSignup(
+            @Valid @ModelAttribute(Constants.CURRENT_USER) User userForm,
+            BindingResult errors) {
 
-        PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
-
-        sanitizeField(userForm.getUsername(), "username", errors, policy, "Nom d'utilisateur invalide");
-        sanitizeField(userForm.getFirstName(), "firstName", errors, policy, "Prénom invalide");
-        sanitizeField(userForm.getFamilyName(), "familyName", errors, policy, "Nom de famille invalide");
-        sanitizeField(userForm.getStreet(), "street", errors, policy, "Rue invalide");
-        sanitizeField(userForm.getCity(), "city", errors, policy, "Ville invalide");
-        sanitizeField(userForm.getPhoneNumber(), "phoneNumber", errors, policy, "Numéro de téléphone invalide");
+        userService.register(userForm, errors);
 
         if (errors.hasErrors()) {
             return "integrated:signup";
         }
 
-
-        if (userDataAccess.getByUsername(userForm.getUsername()) != null) {
-            errors.rejectValue("username", "username.exists", "Ce nom d'utilisateur existe déjà");
-            return "integrated:signup";
-        }
-
-
-        if (userDataAccess.getByMailAddress(userForm.getMailAddress()) != null) {
-            errors.rejectValue("mailAddress", "mailAddress.exists", "Cette adresse email existe déjà");
-            return "integrated:signup";
-        }
-
-
-        String hashedPassword = passwordEncoder.encode(userForm.getPassword());
-
-
-        User user = new User(
-                userForm.getUsername(),
-                hashedPassword,
-                userForm.getFirstName(),
-                userForm.getFamilyName(),
-                userForm.getStreet(),
-                userForm.getStreetNumber(),
-                userForm.getPostalCode(),
-                userForm.getCity(),
-                true,
-                userForm.getPhoneNumber(),
-                userForm.getMailAddress()
-        );
-
-
-        Authority roleUser = new Authority("ROLE_USER", user);
-        user.addAuthority(roleUser);
-
-
-        userDataAccess.add(user);
-
         return "redirect:/welcome";
     }
+
 
     private void sanitizeField(String fieldValue, String fieldName, BindingResult errors, PolicyFactory policy, String message) {
         if (!policy.sanitize(fieldValue).equals(fieldValue)) {

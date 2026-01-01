@@ -83,7 +83,6 @@
 <!-- Bouton Passer commande -->
 <form id="order-btn-form" action="${pageContext.request.contextPath}/order" method="post" onsubmit="return confirm('Confirmer la commande ?');">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <button type="submit" id="order-btn">Passer commande</button>
 </form>
 
