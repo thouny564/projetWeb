@@ -5,7 +5,7 @@
 
 <div id="container-parent">
 <div class="login-container">
-    <h2 class="login-title">Connexion</h2>
+    <h2 class="login-title"><spring:message code="connection"/></h2>
 
     <c:if test="${param.error != null}">
         <div class="error-message">

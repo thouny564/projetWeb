@@ -8,7 +8,7 @@
 <p style="font-size: 30px; margin-left: 220px; font-weight: bold; "><spring:message code="latestGamesText"/></p>
 </div>
 
-<a id="principale">
+<a id="principal">
 
 <div id="containerImage">
     <div class="carousel-images" >
@@ -30,10 +30,6 @@
     </form>
 
 </a>
-<div id="LicenseEnVente">
-
-</div>
-
 
 </div>
 

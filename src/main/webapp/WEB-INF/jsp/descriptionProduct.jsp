@@ -7,9 +7,10 @@
 
 <div class="product-container">
 
-
     <div class="product-left">
-        <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="Nom du produit" >
+        <img src="${pageContext.request.contextPath}/images/${product.imageUrl}"
+             alt="${product.nameEn}">
+
         <p id="description">
 
             <c:choose>
@@ -42,6 +43,8 @@
         </h2>
         <p style="border-top: 2px solid#eee; padding-top: 10px;"><spring:message code="categories"/>:
 
+        <p style="border-top: 2px solid #eee; padding-top: 10px;">
+            <spring:message code="categories"/> :
             <c:choose>
                 <c:when test="${locale== 'fr'}">
                     ${product.category.nameFr}
@@ -52,32 +55,46 @@
                 </c:otherwise>
 
             </c:choose>
-
         </p>
-        <p class="price">${product.price} €</p>
 
-        <form method="post" action="${pageContext.request.contextPath}/cart/addCustomQuantity/${product.id}">
+        <c:choose>
+            <c:when test="${promoPrice < product.price}">
+                <p class="price">
+                    <span style="text-decoration: line-through; color: #999;">
+                        ${product.price} €
+                    </span>
+                    <span style="color: red; font-weight: bold; margin-left: 8px;">
+                        ${promoPrice} €
+                    </span>
+                </p>
+            </c:when>
+
+            <c:otherwise>
+                <p class="price">
+                    ${product.price} €
+                </p>
+            </c:otherwise>
+        </c:choose>
+
+        <form method="post"
+              action="${pageContext.request.contextPath}/cart/addCustomQuantity/${product.id}">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
             <div id="container-quantityStock">
                 <select name="quantity" class="quantity-select">
                     <c:forEach begin="1" end="${product.stock}" var="i">
-                        <option value="${i}" ${i == 1 ? "selected" : ""}>${i}</option>
+                        <option value="${i}">${i}</option>
                     </c:forEach>
                 </select>
                 <span>${product.stock} <spring:message code="stockIndicator"/></span>
             </div>
 
-            <div id="containerButton">
-                <button type="submit" class="add-cart">
-                    <spring:message code="addCartButton"/>
-                </button>
-            </div>
+            <button type="submit" class="add-cart">
+                <spring:message code="addCartButton"/>
+            </button>
         </form>
 
-
         <p><spring:message code="delivery"/></p>
-
     </div>
 
 </div>

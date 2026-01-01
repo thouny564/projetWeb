@@ -2,7 +2,6 @@ package com.spring.henallux.firstSpringProject.dataAccess.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +22,7 @@ public class CustomerOrderEntity implements Serializable {
     private String status;
 
     @Column(name = "total_price", nullable = false, precision = 10, scale = 2)
-    private BigDecimal totalPrice;
+    private Double totalPrice;
 
     @ManyToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
@@ -31,7 +30,7 @@ public class CustomerOrderEntity implements Serializable {
 
     public CustomerOrderEntity() {}
 
-    public CustomerOrderEntity(LocalDateTime orderDate, Boolean paid, String status, BigDecimal totalPrice, UserEntity user) {
+    public CustomerOrderEntity(LocalDateTime orderDate, Boolean paid, String status, Double totalPrice, UserEntity user) {
         this.orderDate = orderDate;
         this.paid = paid;
         this.status = status;
@@ -71,11 +70,11 @@ public class CustomerOrderEntity implements Serializable {
         this.status = status;
     }
 
-    public BigDecimal getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

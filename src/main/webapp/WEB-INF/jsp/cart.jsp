@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <c:set var="locale" value="${param.locale != null ? param.locale : 'fr'}" />
 <h1><spring:message code="cart"/></h1>
@@ -28,9 +29,12 @@
 
     <tbody>
         <c:forEach var="product" items="${products}">
+            <c:set var="promoPrice" value="${promoPrices[product.id]}" />
+
             <tr class="cart-row" id="product-${product.id}">
                 <td class="cart-image">
-                    <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="${product.nameEn}" width="100"/>
+                    <img src="${pageContext.request.contextPath}/images/${product.imageUrl}"
+                         alt="${product.nameEn}" width="100"/>
                 </td>
                 <td class="cart-product">
                     <c:choose>
@@ -47,7 +51,17 @@
                     </c:choose>
                     <spring:message code="categories"/>:
                 </td>
-                <td class="cart-price">${product.price} €</td>
+                <td class="cart-price">
+                    <c:choose>
+                        <c:when test="${promoPrice < product.price}">
+                            <span style="text-decoration: line-through; color:#999;">${product.price} €</span>
+                            <span style="color:red; font-weight:bold; margin-left:8px;">${promoPrice} €</span>
+                        </c:when>
+                        <c:otherwise>
+                            ${product.price} €
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td class="cart-stock">${product.stock}</td>
                 <td class="cart-quantity">
                     <form class="update-form" action="${pageContext.request.contextPath}/cart/update/${product.id}" method="post">
@@ -76,7 +90,9 @@
                         <button type="submit" class="delete-btn"><spring:message code="delete"/></button>
                     </form>
                 </td>
-                <td class="cart-total">${product.price * quantities[product.id]} €</td>
+                <td class="cart-total">
+                    ${promoPrice * quantities[product.id]} €
+                </td>
             </tr>
         </c:forEach>
     </tbody>
@@ -106,6 +122,11 @@
 </c:if>
 
 
+<c:if test="${not empty errorMessage}">
+    <div class="alert alert-danger">
+        <spring:message code="${errorMessage}" />
+    </div>
+</c:if>
 
 
 

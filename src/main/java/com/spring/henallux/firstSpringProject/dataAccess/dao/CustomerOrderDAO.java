@@ -51,8 +51,20 @@ public class CustomerOrderDAO implements CustomerOrderDataAccess {
 
     @Override
     public void update(CustomerOrder order) {
-        customerOrderRepository.save(converter.customerOrderModelToEntity(order));
+
+        CustomerOrderEntity entity = customerOrderRepository.findById(order.getId()).orElse(null);
+        if (entity == null) return;
+
+
+        entity.setStatus(order.getStatus());
+        entity.setPaid(order.getPaid());
+        entity.setTotalPrice(order.getTotalPrice());
+        entity.setOrderDate(order.getOrderDate());
+
+
+        customerOrderRepository.save(entity);
     }
+
 
     @Override
     public ArrayList<CustomerOrder> getAllOrders() {

@@ -42,7 +42,7 @@ public class LoginController {
         form.setStreetNumber(currentUser.getStreetNumber());
         form.setPostalCode(currentUser.getPostalCode());
         form.setCity(currentUser.getCity());
-
+        form.setBirthdate(currentUser.getBirthdate());
         model.addAttribute(Constants.CURRENT_USER, form);
         redirectAttributes.addFlashAttribute(
                 "successMessage",

@@ -9,7 +9,7 @@
 <head>
     <link type="text/css" href="<spring:url value='/css/header.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/login.css' />" rel="stylesheet">
-    <link type="text/css" href="<spring:url value='/css/accueil.css' />" rel="stylesheet">
+    <link type="text/css" href="<spring:url value='/css/welcome.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/cart.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/catalog.css' />" rel="stylesheet">
     <link type="text/css" href="<spring:url value='/css/product.css' />" rel="stylesheet">
@@ -57,7 +57,8 @@
             <c:when test="${not empty pageContext.request.userPrincipal}">
                 <p id="personalized-message">
                     <spring:message code="welcomeUser"/>
-                    ${pageContext.request.userPrincipal.name} !
+                    <c:out value="${pageContext.request.userPrincipal.name}" />
+ !
                 </p>
             </c:when>
         </c:choose>
@@ -66,7 +67,7 @@
            href="${catalogUrl}"
            title="<spring:message code='catalog'/>"
            style="margin-right: 10px;">
-            <spring:message code="cataloghref"/>
+            <spring:message code="catalogHref"/>
         </a>
 
         <a id="shopDescription"
@@ -101,6 +102,9 @@
 
         <c:choose>
             <c:when test="${not empty pageContext.request.userPrincipal}">
+                <form id="logoutForm" action="<c:url value='/logout'/>" method="post" style="display:none;">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
                 <a id="logout-form"
                    href="<c:url value='/logout' />"
                    title="<spring:message code='deconnectText'/>"
@@ -152,7 +156,7 @@
             <a href="${pageContext.request.contextPath}/authenticated">
                 <spring:message code="hrefTitleAccount"/>
             </a>
-            <a href="${pageContext.request.contextPath}/compagnyDescription">
+            <a href="${pageContext.request.contextPath}/company">
                 <spring:message code="shop"/>
             </a>
         </div>
@@ -162,6 +166,7 @@
 </footer>
 
 <script src="<spring:url value='/js/carousel.js' />"></script>
+<script src="<spring:url value='/js/logout.js' />"></script>
 
 </body>
 </html>

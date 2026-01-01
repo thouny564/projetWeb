@@ -1,6 +1,9 @@
 package com.spring.henallux.firstSpringProject.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 public class UserUpdateForm {
 
@@ -40,7 +43,16 @@ public class UserUpdateForm {
     @Size(min = 2, max = 50, message = "City must be between 2 and 50 characters")
     private String city;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthdate;
 
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
 
     public String getFirstName() {
         return firstName;

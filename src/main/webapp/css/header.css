@@ -51,8 +51,30 @@ body {
   transition: color 0.3s;
 }
 
+/* Boutons */
+.prev-btn, .next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 20;
+  background: none;
+}
+
+.prev-btn {
+  left: 5px;
+}
+
+.next-btn {
+  right: 5px;
+}
+
 .nav-links a:hover {
-  color: #6dc7e3; /* Changement de couleur au survol (le rouge de votre bouton) */
+  color: #6dc7e3;
 }
 
 #personalized-message{
@@ -90,8 +112,6 @@ body {
 #logout-form {
   text-decoration: none;
   background-color: lightgreen;
-  margin-top: 14px;
-  padding:  4px 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -177,5 +197,28 @@ footer {
 .footer-links a:hover{
   color: mediumpurple;
 }
+
+
+#shopDescription, #catalog {
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  color: white;
+
+}
+
+#shopDescription:hover{
+  color: mediumpurple;
+}
+
+footer {
+  padding: 20px;
+  background-color: #333;
+  color: white;
+
+
+}
+
+
 
 

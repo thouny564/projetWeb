@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -79,8 +78,7 @@ public class UserDAO implements UserDataAccess {
         existingUser.setCity(user.getCity());
         existingUser.setPhoneNumber(user.getPhoneNumber());
         existingUser.setMailAddress(user.getMailAddress());
-
-
+        existingUser.setBirthdate(user.getBirthdate());
         userRepository.save(existingUser);
     }
 

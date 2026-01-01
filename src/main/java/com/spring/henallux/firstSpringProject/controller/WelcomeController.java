@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes({Constants.CURRENT_USER})
 public class WelcomeController {
 
-
-
     @ModelAttribute(Constants.CURRENT_USER)
     public User signup(){
         return new User();

@@ -4,9 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const confirmInput = document.querySelector("#confirmPassword");
     const errorSpan = document.querySelector("#passwordError");
 
-    // Récupérer la locale depuis l'URL
     const params = new URLSearchParams(window.location.search);
-    const locale = params.get('locale') || 'fr'; // par défaut fr
+    const locale = params.get('locale') || 'fr';
     console.log("Locale actuelle :", locale);
 
     function checkPasswords() {
@@ -23,14 +22,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Validation au moment de la saisie
+
     passwordInput.addEventListener("input", checkPasswords);
     confirmInput.addEventListener("input", checkPasswords);
 
-    // Validation à l'envoi du formulaire
+
     form.addEventListener("submit", function(e) {
         if (!checkPasswords()) {
-            e.preventDefault(); // Empêche l'envoi si les mots de passe ne correspondent pas
+            e.preventDefault();
         }
     });
 });

@@ -10,7 +10,7 @@
         <form:form id="signupForm" modelAttribute="currentUser" method="post"
                    action="/eshop/register/submitSignup">
 
-            <!-- Token CSRF -->
+
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
             <div class="form-group">
@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-group">
-                <label for="confirmPassword">Confirmer le mot de passe :</label>
+                <label for="confirmPassword"><spring:message code="confirmPassword"/>:</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" />
                 <span id="passwordError" class="error" style="color:red; display:none;"></span>
             </div>
@@ -63,6 +63,12 @@
                 <form:errors path="street" cssClass="error" />
             </div>
 
+        <div class="form-group">
+            <form:label path="birthdate"><spring:message code="birthdate"/>:</form:label>
+            <form:input path="birthdate" type="date" />
+            <form:errors path="birthdate" cssClass="error" />
+        </div>
+
             <div class="form-group">
                 <form:label path="streetNumber"><spring:message code="streetNumber"/>:</form:label>
                 <form:input path="streetNumber" type="number"/>
@@ -90,3 +96,5 @@
 
     </div>
 </div>
+
+

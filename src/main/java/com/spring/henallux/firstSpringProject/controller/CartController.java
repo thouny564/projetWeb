@@ -1,6 +1,7 @@
 package com.spring.henallux.firstSpringProject.controller;
 
 import com.spring.henallux.firstSpringProject.dataAccess.dao.ProductDataAccess;
+import com.spring.henallux.firstSpringProject.dataAccess.dao.PromotionDataAccess;
 import com.spring.henallux.firstSpringProject.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,16 +10,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class CartController {
 
     private final ProductDataAccess productDataAccess;
+    private final PromotionDataAccess promotionDataAccess;
 
     @Autowired
-    public CartController(ProductDataAccess productDataAccess) {
+    public CartController(ProductDataAccess productDataAccess, PromotionDataAccess promotionDataAccess) {
         this.productDataAccess = productDataAccess;
+        this.promotionDataAccess = promotionDataAccess;
     }
 
 
@@ -40,7 +45,8 @@ public class CartController {
         Cart cart = getCart(session);
         Map<Integer, Integer> items = cart.getItems();
 
-        ArrayList<Product> products = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
+        Map<Integer, Double> promoPrices = new HashMap<>();
         double cartTotal = 0.0;
 
         for (Map.Entry<Integer, Integer> entry : items.entrySet()) {
@@ -50,13 +56,30 @@ public class CartController {
             Product product = productDataAccess.get(productId);
             if (product != null && quantity > 0) {
                 products.add(product);
-                cartTotal += product.getPrice() * quantity;
+
+
+                List<Promotion> promotions = promotionDataAccess.getPromotionsByProductId(productId);
+                double discountedPrice = product.getPrice();
+                int maxDiscount = 0;
+                for (Promotion promo : promotions) {
+                    if (promo.getDiscountPercentage() > maxDiscount) {
+                        maxDiscount = promo.getDiscountPercentage();
+                    }
+                }
+                if (maxDiscount > 0) {
+                    discountedPrice = product.getPrice() * (1 - maxDiscount / 100.0);
+                }
+                promoPrices.put(productId, discountedPrice);
+
+
+                cartTotal += discountedPrice * quantity;
             }
         }
 
         model.addAttribute("products", products);
         model.addAttribute("quantities", items);
         model.addAttribute("cartTotal", cartTotal);
+        model.addAttribute("promoPrices", promoPrices);
 
         return "integrated:cart";
     }
@@ -112,12 +135,6 @@ public class CartController {
     }
 
 
-
-
-
-
-
-
     @PostMapping("/cart/update/{productId}")
     public String updateCart(
             @PathVariable Integer productId,
@@ -137,7 +154,6 @@ public class CartController {
         } else {
             items.remove(productId);
         }
-
         return "redirect:/cart";
     }
 
@@ -159,7 +175,6 @@ public class CartController {
                 items.remove(productId);
             }
         }
-
         return "redirect:/cart";
     }
 

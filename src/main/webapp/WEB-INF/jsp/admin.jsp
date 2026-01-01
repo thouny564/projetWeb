@@ -1,20 +1,14 @@
 <%@ page pageEncoding="UTF-8"
          contentType="text/html; charset=UTF-8"%>
-
-
 <%@ include file="include/importTags.jsp" %>
 
-<html>
-<head>
-    <title>ADMIN</title>
-</head>
-<body>
+<title>ADMIN</title>
 
-<spring:message code="welcomeAdmin"/>
 
 <div>
 
+    <spring:message code="welcomeAdmin"/>
+
 </div>
 
-</body>
-</html>
+

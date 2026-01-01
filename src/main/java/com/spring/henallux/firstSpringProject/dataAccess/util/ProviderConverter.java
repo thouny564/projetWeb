@@ -5,7 +5,6 @@ import com.github.dozermapper.core.Mapper;
 import com.spring.henallux.firstSpringProject.dataAccess.entity.*;
 import com.spring.henallux.firstSpringProject.model.*;
 import org.springframework.stereotype.Component;
-import com.github.dozermapper.core.DozerBeanMapper;
 
 
 @Component
@@ -15,13 +14,19 @@ public class ProviderConverter {
 
     public UserEntity userModelToUserEntity(User user) {
         if (user == null) return null;
-        return mapper.map(user, UserEntity.class);
+        UserEntity entity = mapper.map(user, UserEntity.class);
+        entity.setBirthdate(user.getBirthdate());
+        return entity;
     }
+
 
     public User userEntityToUserModel(UserEntity userEntity) {
         if (userEntity == null) return null;
-        return mapper.map(userEntity, User.class);
+        User user = mapper.map(userEntity, User.class);
+        user.setBirthdate(userEntity.getBirthdate());
+        return user;
     }
+
 
 
 
@@ -88,7 +93,7 @@ public class ProviderConverter {
         if (entity == null) return null;
 
         CustomerOrder model = mapper.map(entity, CustomerOrder.class);
-        model.setUser(userEntityToUserModel(entity.getUser()));
+
 
         return model;
     }
@@ -117,7 +122,23 @@ public class ProviderConverter {
 
 
 
+    public PromotionEntity promotionModelToEntity(Promotion model) {
+        if (model == null) return null;
 
+        PromotionEntity entity = mapper.map(model, PromotionEntity.class);
+        if (model.getProduct() != null) {
+            entity.setProduct(productModelToProductEntity(model.getProduct()));
+        }
+        return entity;
+    }
 
+    public Promotion promotionEntityToModel(PromotionEntity entity) {
+        if (entity == null) return null;
 
+        Promotion model = mapper.map(entity, Promotion.class);
+        if (entity.getProduct() != null) {
+            model.setProduct(productEntityToProductModel(entity.getProduct()));
+        }
+        return model;
+    }
 }
