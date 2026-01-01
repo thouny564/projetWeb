@@ -2,9 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<h1>Mon Panier</h1>
 
-<!-- Message de confirmation commande -->
+<c:set var="locale" value="${param.locale != null ? param.locale : 'fr'}" />
+<h1><spring:message code="cart"/></h1>
+
+
 <c:if test="${not empty successMessage}">
     <div class="success">
         <c:out value="${successMessage}" />
@@ -19,8 +21,8 @@
             <th><spring:message code="price"/></th>
             <th><spring:message code="stock"/></th>
             <th><spring:message code="quantity"/></th>
-            <th>Actions</th>
-            <th>Total</th>
+            <th><spring:message code="actions"/></th>
+            <th><spring:message code="total"/></th>
         </tr>
     </thead>
 
@@ -31,10 +33,19 @@
                     <img src="${pageContext.request.contextPath}/images/${product.imageUrl}" alt="${product.nameEn}" width="100"/>
                 </td>
                 <td class="cart-product">
-                    <strong>${product.nameEn} (${product.nameFr})</strong><br/>
-                    ${product.descriptionEn}<br/>
-                    ${product.descriptionFr}<br/>
-                    Catégorie : ${product.category.nameEn} (${product.category.nameFr})
+                    <c:choose>
+                        <c:when test="${locale='fr'}">
+                            <strong>${product.nameFr}</strong>
+                            <br>${product.descriptionFr}<br/>
+                            (${product.category.nameFr})
+                        </c:when>
+                        <c:otherwise>
+                            <strong>${product.nameEn}</strong>
+                            <br>${product.descriptionEn}<br/>
+                            ${product.category.nameEn}
+                        </c:otherwise>
+                    </c:choose>
+                    <spring:message code="categories"/>:
                 </td>
                 <td class="cart-price">${product.price} €</td>
                 <td class="cart-stock">${product.stock}</td>
@@ -46,7 +57,7 @@
                                 <option value="${i}" <c:if test="${i == quantities[product.id]}">selected</c:if>>${i}</option>
                             </c:forEach>
                         </select>
-                        <button type="submit" class="update-btn">Mettre à jour</button>
+                        <button type="submit" class="update-btn"><spring:message code="updateForm"/></button>
                     </form>
                 </td>
                 <td class="cart-actions">
@@ -62,7 +73,7 @@
 
                     <form class="delete-form" action="${pageContext.request.contextPath}/cart/delete/${product.id}" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                        <button type="submit" class="delete-btn">Supprimer</button>
+                        <button type="submit" class="delete-btn"><spring:message code="delete"/></button>
                     </form>
                 </td>
                 <td class="cart-total">${product.price * quantities[product.id]} €</td>
@@ -73,19 +84,20 @@
     <tfoot>
         <tr>
             <td colspan="6" style="text-align: right;">
-                <strong>Total panier :</strong>
+                <strong><spring:message code="total"/> <spring:message code="totalCartText"/>:</strong>
             </td>
             <td><strong>${cartTotal} €</strong></td>
         </tr>
     </tfoot>
 </table>
 
-<!-- Bouton Passer commande -->
-<form id="order-btn-form" action="${pageContext.request.contextPath}/order" method="post" onsubmit="return confirm('Confirmer la commande ?');">
+
+<form id="order-btn-form" action="${pageContext.request.contextPath}/order" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    <button type="submit" id="order-btn">Passer commande</button>
+    <button type="submit" id="order-btn" title=""><spring:message code="placeOrder"/></button>
 </form>
+
+<script src="<spring:url value='/js/confirmAlert.js' />"></script>
 
 <c:if test="${not empty errorMessage}">
     <div class="emptyCartError">
@@ -97,14 +109,3 @@
 
 
 
-<!-- Ajouter le produit ID 1 au panier -->
-<form action="${pageContext.request.contextPath}/cart/add/1" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    <button type="submit">Ajouter produit ID 1 au panier</button>
-</form>
-
-<!-- Retirer le produit ID 1 du panier -->
-<form action="${pageContext.request.contextPath}/cart/remove/1" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    <button type="submit">Retirer produit ID 1 du panier</button>
-</form>

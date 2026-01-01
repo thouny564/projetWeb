@@ -31,6 +31,7 @@ public class SecurityConfiguration {
             "/home",
             "/welcome",
             "/register",
+            "/**",
             "/register/**",
             "/signup/**",
             "/css/**",
@@ -44,7 +45,9 @@ public class SecurityConfiguration {
             "/product",
             "/product/**",
             "/category",
-            "/category/**"
+            "/category/**",
+            "/company",
+            "/company/**"
 
     };
     private static final String[] ADMIN_ROUTES = new String[]{

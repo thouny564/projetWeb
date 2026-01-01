@@ -2,9 +2,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
+
 <div class="container">
 
-    <!-- Filtre par catégorie -->
     <div id="search_filters">
         <p style="margin-left: 10px;"><spring:message code="filterTextContainer"/></p>
         <section>
@@ -40,14 +40,17 @@
         </section>
     </div>
 
-    <!-- Liste des produits -->
+
     <div id="productsContainer">
         <c:forEach var="product" items="${products}">
+            <spring:url var="productUrl" value="/product/${product.id}">
+                <spring:param name="locale" value="${param.locale != null ? param.locale : 'fr'}"/>
+            </spring:url>
             <div class="card">
 
-                <!-- Lien vers la fiche produit -->
+
                 <a style="text-decoration: none"
-                   href="${pageContext.request.contextPath}/product/${product.id}">
+                   href="${productUrl}">
                     <img src="${pageContext.request.contextPath}/images/${product.imageUrl}"
                          alt="${product.nameEn}" width="180" height="220">
 
@@ -71,7 +74,6 @@
                     <p>${product.price} €</p>
                 </a>
 
-                <!-- Bouton ajouter au panier -->
                 <form method="post" action="${pageContext.request.contextPath}/cart/add/${product.id}">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <button type="submit">

@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -31,7 +32,7 @@ public class LoginController {
     }
 
     @GetMapping("/authenticated")
-    public String authenticatedPage(Model model ,@AuthenticationPrincipal User currentUser) {
+    public String authenticatedPage(Model model ,@AuthenticationPrincipal User currentUser,  RedirectAttributes redirectAttributes) {
         UserUpdateForm form = new UserUpdateForm();
         form.setFirstName(currentUser.getFirstName());
         form.setFamilyName(currentUser.getFamilyName());
@@ -43,6 +44,10 @@ public class LoginController {
         form.setCity(currentUser.getCity());
 
         model.addAttribute(Constants.CURRENT_USER, form);
+        redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "userCreated"
+        );
         return "integrated:authenticated";
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,9 +32,16 @@ public class PaypalController {
     }
 
     @GetMapping("/pay/{orderId}")
-    public String payWithPaypal(@PathVariable Integer orderId, HttpServletRequest request) {
+    public String payWithPaypal(@PathVariable Integer orderId, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         CustomerOrder order = customerOrderDataAccess.get(orderId);
-        if (order == null) return "redirect:/cart";
+        if (order == null) {
+            redirectAttributes.addFlashAttribute(
+                    "errorMessage",
+                    "error.cart.empty"
+            );
+            return "redirect:/cart";
+
+        }
 
         String contextPath = request.getContextPath();
         String scheme = request.getScheme();            // http ou https

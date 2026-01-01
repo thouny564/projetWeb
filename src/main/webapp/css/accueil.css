@@ -134,13 +134,15 @@ display: block;
 
 }
 
-#shopDescription {
+#shopDescription, #catalog {
 text-decoration: none;
 font-weight: 500;
 cursor: pointer;
 color: white;
 
 }
+
+
 
 #shopDescription:hover{
     color: mediumpurple;

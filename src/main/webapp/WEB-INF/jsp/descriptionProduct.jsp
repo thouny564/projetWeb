@@ -2,6 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<c:set var="locale" value="${param.locale != null ? param.locale : 'fr'}" />
+
+
 <div class="product-container">
 
 
@@ -10,7 +13,7 @@
         <p id="description">
 
             <c:choose>
-                <c:when test="${lang== 'fr'}">
+                <c:when test="${locale== 'fr'}">
                     ${product.descriptionFr}
                 </c:when>
 
@@ -26,7 +29,7 @@
     <div class="product-right">
         <h2>
             <c:choose>
-                <c:when test="${lang== 'fr'}">
+                <c:when test="${locale== 'fr'}">
                     ${product.nameFr}
                 </c:when>
 
@@ -40,7 +43,7 @@
         <p style="border-top: 2px solid#eee; padding-top: 10px;"><spring:message code="categories"/>:
 
             <c:choose>
-                <c:when test="${lang== 'fr'}">
+                <c:when test="${locale== 'fr'}">
                     ${product.category.nameFr}
                 </c:when>
 
@@ -62,7 +65,7 @@
                         <option value="${i}" ${i == 1 ? "selected" : ""}>${i}</option>
                     </c:forEach>
                 </select>
-                <span>${product.stock} en stock</span>
+                <span>${product.stock} <spring:message code="stockIndicator"/></span>
             </div>
 
             <div id="containerButton">

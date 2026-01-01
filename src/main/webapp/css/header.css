@@ -79,12 +79,24 @@ body {
 }
 
 #myAccount {
-  margin-top: 15px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  text-decoration: none;
 }
 
 #logout-form {
+  text-decoration: none;
   background-color: lightgreen;
   margin-top: 14px;
+  padding:  4px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  text-decoration: none;
 }
 
 .dropdown-content a {

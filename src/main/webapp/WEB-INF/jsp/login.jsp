@@ -9,7 +9,7 @@
 
     <c:if test="${param.error != null}">
         <div class="error-message">
-            Nom d'utilisateur ou mot de passe incorrect.
+            <spring:message code="login.error"/>
         </div>
     </c:if>
 
